@@ -1,7 +1,7 @@
 package com.okanaktas.classesandfunctions
 
 class Person (var name: String,var surName: String,var age : Int){
-
+    var hairColor = ""
     /*
     var name = ""
     var surName =""

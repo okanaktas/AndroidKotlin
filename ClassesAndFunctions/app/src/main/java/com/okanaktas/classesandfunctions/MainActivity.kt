@@ -10,6 +10,9 @@ class MainActivity : AppCompatActivity() {
 
         val person = Person("okan","aktas",26)
 
+        person.hairColor = "Yellow"
+
         println(person.name)
+        println(person.hairColor)
     }
 }
