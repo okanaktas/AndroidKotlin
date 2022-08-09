@@ -1,4 +1,4 @@
-package com.okanaktas.myapplication
+package com.okanaktas.classesandfunctions
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,7 +10,6 @@ class MainActivity : AppCompatActivity() {
 
         val person = Person("okan","aktas",26)
 
-        println(person.age)
-
+        println(person.name)
     }
 }
