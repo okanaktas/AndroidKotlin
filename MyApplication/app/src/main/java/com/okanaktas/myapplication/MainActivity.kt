@@ -7,9 +7,7 @@ import com.okanaktas.myapplication.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    var number1 : Int? = null
-    var number2 : Int? =null
-    var result : Int? =null
+    var age : Int? = null
 
     private lateinit var binding: ActivityMainBinding
 
@@ -20,14 +18,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
 
+    }
+
+    fun buttonSave(view: View){
+      age =  binding.editTextNumber.text.toString().toIntOrNull()
+        if(age !=null){
+            binding.textView.setText("Your Age: ${age}" )
+        }else{
+            binding.textView.setText("Error")
+        }
+    }
+    fun buttonDelete(view: View){
 
     }
 
-    fun buttonSum(view : View){
-        number1 = binding.editTextNumber.text.toString().toIntOrNull()
-        number2 = binding.editTextNumber2.text.toString().toIntOrNull()
-
-        result = number1!!+ number2!!
-
-    }
 }
