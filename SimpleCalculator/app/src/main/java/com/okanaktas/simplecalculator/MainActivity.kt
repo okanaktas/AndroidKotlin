@@ -7,6 +7,9 @@ import com.okanaktas.simplecalculator.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    // lateinit var number : String -->Daha sonra initiazlize edeceğim demek
+    // ama sadece int vs de çalışmıyor. String vs de çalışıyor
+
     var number1 : Double? = null
     var number2 : Double? = null
     var result : Double? = null
