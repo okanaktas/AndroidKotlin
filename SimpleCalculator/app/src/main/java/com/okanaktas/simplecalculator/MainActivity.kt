@@ -7,9 +7,9 @@ import com.okanaktas.simplecalculator.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    var number1 : Int? = null
-    var number2 : Int? = null
-    var result : Int? = null
+    var number1 : Double? = null
+    var number2 : Double? = null
+    var result : Double? = null
 
     private lateinit var binding: ActivityMainBinding
 
@@ -22,8 +22,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun buttonSum(view: View) {
-        number1 = binding.editTextNumber.text.toString().toIntOrNull()
-        number2 = binding.editTextNumber2.text.toString().toIntOrNull()
+        number1 = binding.editTextNumber.text.toString().toDoubleOrNull()
+        number2 = binding.editTextNumber2.text.toString().toDoubleOrNull()
 
         if(number1 != null && number2 !=null){
             result = number1!! + number2!!
@@ -36,8 +36,8 @@ class MainActivity : AppCompatActivity() {
 
     fun buttonSub(view: View) {
 
-        number1 = binding.editTextNumber.text.toString().toIntOrNull()
-        number2 = binding.editTextNumber2.text.toString().toIntOrNull()
+        number1 = binding.editTextNumber.text.toString().toDoubleOrNull()
+        number2 = binding.editTextNumber2.text.toString().toDoubleOrNull()
 
         if(number1 != null && number2 !=null){
             result = number1!! - number2!!
@@ -50,8 +50,8 @@ class MainActivity : AppCompatActivity() {
 
     fun buttonMultiply(view: View) {
 
-        number1 = binding.editTextNumber.text.toString().toIntOrNull()
-        number2 = binding.editTextNumber2.text.toString().toIntOrNull()
+        number1 = binding.editTextNumber.text.toString().toDoubleOrNull()
+        number2 = binding.editTextNumber2.text.toString().toDoubleOrNull()
 
         if(number1 != null && number2 !=null){
             result = number1!! * number2!!
@@ -64,8 +64,8 @@ class MainActivity : AppCompatActivity() {
 
     fun buttonDiv(view: View) {
 
-        number1 = binding.editTextNumber.text.toString().toIntOrNull()
-        number2 = binding.editTextNumber2.text.toString().toIntOrNull()
+        number1 = binding.editTextNumber.text.toString().toDoubleOrNull()
+        number2 = binding.editTextNumber2.text.toString().toDoubleOrNull()
 
         if(number1 != null && number2 !=null){
             result = number1!! / number2!!
