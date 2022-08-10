@@ -16,19 +16,18 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        Toast.makeText(applicationContext, "Welcome to app", Toast.LENGTH_LONG).show()
     }
 
-    fun buttonSave(view: View) {
 
+    fun buttonAlert(view : View){
         val alertDialog = AlertDialog.Builder(this)
-        alertDialog.setTitle("Save")
-        alertDialog.setMessage("Are You Sure")
-        alertDialog.setPositiveButton("Yes") { dialog, which ->
-            Toast.makeText(this, "Saved", Toast.LENGTH_LONG)
+        alertDialog.setTitle("Alert Dialog")
+        alertDialog.setMessage("Choose One")
+        alertDialog.setPositiveButton("Yes!"){dialog, which ->
+            Toast.makeText(applicationContext,"You Say Yes!",Toast.LENGTH_LONG).show()
         }
-        alertDialog.setNegativeButton("No") { dialog, which ->
-            Toast.makeText(this, "Not Saved", Toast.LENGTH_LONG)
+        alertDialog.setNegativeButton("No!"){dialog, which ->
+            Toast.makeText(applicationContext,"You Say No!",Toast.LENGTH_LONG).show()
         }
         alertDialog.show()
     }
