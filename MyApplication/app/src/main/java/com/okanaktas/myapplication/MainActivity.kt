@@ -3,11 +3,11 @@ package com.okanaktas.myapplication
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.okanaktas.myapplication.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
-    var age : Int? = null
 
     private lateinit var binding: ActivityMainBinding
 
@@ -20,16 +20,17 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun buttonSave(view: View){
-      age =  binding.editTextNumber.text.toString().toIntOrNull()
-        if(age !=null){
-            binding.textView.setText("Your Age: ${age}" )
-        }else{
-            binding.textView.setText("Error")
+    fun buttonAlert(view: View) {
+
+        val alertDialog = AlertDialog.Builder(this)
+        alertDialog.setTitle("Alert Message")
+        alertDialog.setMessage("Select One")
+        alertDialog.setPositiveButton("Yes!") { alertDialog, which ->
+            Toast.makeText(applicationContext, "You say yes", Toast.LENGTH_LONG).show()
         }
+        alertDialog.setNegativeButton("No") { alertDialog, which ->
+            Toast.makeText(applicationContext, "You Say No", Toast.LENGTH_LONG).show()
+        }
+            alertDialog.show()
     }
-    fun buttonDelete(view: View){
-
-    }
-
 }
