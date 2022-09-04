@@ -2,6 +2,7 @@ package com.okanaktas.begin
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.okanaktas.begin.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -14,11 +15,13 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        val myArrayList = arrayListOf<Any>()
 
-        val array = arrayOf("bugra", "okan","aktas",5)
+        myArrayList.add("Bugra")
+        myArrayList.add("Okan")
+        myArrayList.add(26)
 
-        println(array[0])
-        println(array[3])
+        println(myArrayList)
 
     }
 }
