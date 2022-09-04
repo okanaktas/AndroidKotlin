@@ -15,24 +15,16 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val myArrayList = arrayListOf<Any>()
+        val myAray = arrayListOf<Any>()
 
-        myArrayList.add("Bugra")
-        myArrayList.add("Bugra")
-        myArrayList.add("Okan")
-        myArrayList.add(26)
+        myAray.add("bugra")
+        myAray.add("okan")
+        myAray.add(26)
 
-        println("Liste Elemanları: ${myArrayList.size}")
+        for(i in myAray){
+            println(i)
+        }
 
-        println("merhaba dunya")
-
-        val hastSet = hashSetOf<Any>()
-
-        hastSet.add("Yasin")
-        hastSet.add("Yasin")
-        hastSet.add(45)
-
-        println("hashset Elemanları: ${hastSet.size}")
 
     }
 }
