@@ -18,10 +18,21 @@ class MainActivity : AppCompatActivity() {
         val myArrayList = arrayListOf<Any>()
 
         myArrayList.add("Bugra")
+        myArrayList.add("Bugra")
         myArrayList.add("Okan")
         myArrayList.add(26)
 
-        println(myArrayList)
+        println("Liste Elemanları: ${myArrayList.size}")
+
+        println("merhaba dunya")
+
+        val hastSet = hashSetOf<Any>()
+
+        hastSet.add("Yasin")
+        hastSet.add("Yasin")
+        hastSet.add(45)
+
+        println("hashset Elemanları: ${hastSet.size}")
 
     }
 }
