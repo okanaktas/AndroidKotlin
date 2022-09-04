@@ -13,8 +13,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+
+        val array = arrayOf("bugra", "okan","aktas",5)
+
+        println(array[0])
+        println(array[3])
+
     }
-
-
-
 }
