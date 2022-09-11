@@ -8,6 +8,8 @@ import com.okanaktas.begin.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
+    val myArray = arrayListOf<Any>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val myAray = arrayListOf<Any>()
+     /*   val myAray = arrayListOf<Any>()
 
         myAray.add("bugra")
         myAray.add("okan")
@@ -25,6 +27,15 @@ class MainActivity : AppCompatActivity() {
             println(i)
         }
 
+      */
+
+        myArray.add("bugra")
+        myArray.add("okan")
+        myArray.add(26)
+
+        for(i in myArray){
+            println("girilen degerler: ${i}")
+        }
 
     }
 }
