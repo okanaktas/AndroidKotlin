@@ -8,7 +8,8 @@ import com.okanaktas.begin.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    val myArray = arrayListOf<Any>()
+    var number = 0
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,25 +18,17 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-     /*   val myAray = arrayListOf<Any>()
 
-        myAray.add("bugra")
-        myAray.add("okan")
-        myAray.add(26)
-
-        for(i in myAray){
-            println(i)
-        }
-
-      */
-
-        myArray.add("bugra")
-        myArray.add("okan")
-        myArray.add(26)
-
-        for(i in myArray){
-            println("girilen degerler: ${i}")
-        }
 
     }
+
+    fun buttonStart(view: View){
+
+        binding.textViewTimer.setText("Timer: ${number}")
+        number++
+    }
+    fun buttonStop(view : View){
+
+    }
+
 }
