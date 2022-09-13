@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     fun buttonStart(view: View) {
         val intent = Intent(applicationContext, GameActivity::class.java)
         intent.putExtra("inputValue", binding.editTextTime.text.toString())
-        intent.putExtra("name",binding.editTextPlayer.text.toString())
+        intent.putExtra("name", binding.editTextPlayer.text.toString())
         startActivity(intent)
     }
 
