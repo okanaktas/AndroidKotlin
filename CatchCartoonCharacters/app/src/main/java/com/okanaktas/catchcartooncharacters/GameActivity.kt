@@ -22,21 +22,25 @@ class GameActivity : AppCompatActivity() {
         //Gelen degeri alma
         val intent = intent
         var deger = intent.getStringExtra("inputValue")
-        binding.textViewInput.setText("Gelen deger: $deger")
         //Gelen degeri int e cevirme
         var newDeger = deger!!.toInt()
+
+        //Gelen ismi alma
+        var inputName = intent.getStringExtra("name")
+        binding.textViewPlayerName.setText("Player Name: $inputName")
+
         //Runnable oluşturma
         runnable = object : Runnable{
             override fun run() {
                 newDeger--
-                binding.textViewInput.setText("Time: $newDeger")
+                binding.textViewInputTime.setText("Remaining Seconds: $newDeger")
 
                 handler.postDelayed(runnable,1000)
             }
         }
         handler.post(runnable)
 
-        
+
 
     }
 }
