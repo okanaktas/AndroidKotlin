@@ -18,7 +18,10 @@ class GameActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGameBinding
 
     var runnable: Runnable = Runnable {}
+    var runnableImage: Runnable = Runnable {}
+
     var handler: Handler = Handler()
+    var handlerImage: Handler = Handler()
 
     var score: Int = 0
 
@@ -62,6 +65,12 @@ class GameActivity : AppCompatActivity() {
 
                 if (newDeger < 0) {
                     handler.removeCallbacks(runnable)
+
+                    handlerImage.removeCallbacks(runnableImage)
+                    for(i in imageArray){
+                        i.visibility = View.INVISIBLE
+                    }
+
                     binding.textViewInputTime.setText("Seconds: Finished!!")
 
                     val alertDialog = AlertDialog.Builder(this@GameActivity)
@@ -94,12 +103,22 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun hideImages() {
-        for (image in imageArray) {
-            image.visibility = View.INVISIBLE
-        }
 
-        val random = Random()
-        val randomNumber = random.nextInt(9)
-        imageArray[randomNumber].visibility = View.VISIBLE
+        runnableImage = object : Runnable {
+            override fun run() {
+
+                for (image in imageArray) {
+                    image.visibility = View.INVISIBLE
+                }
+
+                val random = Random()
+                val randomNumber = random.nextInt(9)
+                imageArray[randomNumber].visibility = View.VISIBLE
+
+                handlerImage.postDelayed(runnableImage, 550)
+            }
+
+        }
+        handlerImage.post(runnableImage)
     }
 }
