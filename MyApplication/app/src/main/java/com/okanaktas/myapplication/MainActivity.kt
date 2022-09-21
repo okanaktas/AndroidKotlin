@@ -31,14 +31,19 @@ class MainActivity : AppCompatActivity() {
                 binding.textView.setText("Timer: $number")
                 number++
 
-                handler.postDelayed(runnable, 10000)
+                handler.postDelayed(runnable, 1000)
             }
         }
         handler.post(runnable)
 
+        binding.buttonStart.isEnabled = false
+
     }
 
     fun buttonStop(view : View ) {
-
+        handler.removeCallbacks(runnable)
+        number = 0
+        binding.textView.setText("Timer: $number")
+        binding.buttonStart.isEnabled = true
     }
 }
