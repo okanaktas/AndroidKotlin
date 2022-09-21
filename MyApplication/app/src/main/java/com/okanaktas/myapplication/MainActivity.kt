@@ -3,6 +3,7 @@ package com.okanaktas.myapplication
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
 import com.okanaktas.myapplication.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun buttonStart() {
+    fun buttonStart(view : View) {
 
         runnable = object : Runnable{
             override fun run() {
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun buttonStop() {
+    fun buttonStop(view : View ) {
 
     }
 }
