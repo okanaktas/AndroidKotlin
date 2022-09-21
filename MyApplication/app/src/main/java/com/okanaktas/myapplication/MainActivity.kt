@@ -2,12 +2,42 @@ package com.okanaktas.myapplication
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import com.okanaktas.myapplication.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+
+    var number = 0
+
+    var runnable : Runnable = Runnable {}
+    var handler : Handler = Handler ()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        println("hello world")
+
+
+    }
+
+    fun buttonStart() {
+
+        runnable = object : Runnable{
+            override fun run() {
+                binding.textView.setText("Timer: $number")
+                number++
+
+                handler.postDelayed(runnable, 10000)
+            }
+        }
+        handler.post(runnable)
+
+    }
+
+    fun buttonStop() {
+
     }
 }
