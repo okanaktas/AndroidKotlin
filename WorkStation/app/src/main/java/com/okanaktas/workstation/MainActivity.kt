@@ -27,6 +27,12 @@ class MainActivity : AppCompatActivity() {
 
         //lambda
         val multiplyLambda = {number1 : Int, number2 : Int -> number1 + number2}
+        println(multiplyLambda(2,5))
+
+        //lambda2
+
+        val carpim : (Int, Int) -> Int = {a,b -> a*b}
+        println(carpim(3,4))
 
 
     }
