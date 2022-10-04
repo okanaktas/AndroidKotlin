@@ -9,10 +9,10 @@ import com.okanaktas.myapplication.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    var number = 0
+    var handler: Handler = Handler()
+    var runnable: Runnable = Runnable {}
 
-    var runnable : Runnable = Runnable {}
-    var handler : Handler = Handler ()
+    var number = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,29 +21,26 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
 
-
     }
 
-    fun buttonStart(view : View) {
+    fun buttonStart(view: View) {
 
-        runnable = object : Runnable{
+        runnable = object : Runnable {
             override fun run() {
                 binding.textView.setText("Timer: $number")
                 number++
-
-                handler.postDelayed(runnable, 1000)
+                handler.postDelayed(runnable,1000)
             }
         }
         handler.post(runnable)
 
-        binding.buttonStart.isEnabled = false
-
+        binding.buttonStart.visibility = View.INVISIBLE
     }
 
-    fun buttonStop(view : View ) {
+    fun buttonStop(view: View) {
         handler.removeCallbacks(runnable)
         number = 0
         binding.textView.setText("Timer: $number")
-        binding.buttonStart.isEnabled = true
+        binding.buttonStart.visibility = View.VISIBLE
     }
 }
