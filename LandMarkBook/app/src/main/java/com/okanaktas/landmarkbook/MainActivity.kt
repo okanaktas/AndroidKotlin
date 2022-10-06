@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.okanaktas.landmarkbook.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -12,6 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var landMarkArrayList: ArrayList<LandMark>
 
+    var number : Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,10 +22,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         //data
-        val colosseum = LandMark("Colosseum","Italy",R.drawable.colosseum)
-        val eiffel = LandMark("Eiffel","France",R.drawable.eiffel)
-        val london_bridge = LandMark("London Bridge","England",R.drawable.london_bridge)
-        val pisa = LandMark("Pisa","Italy",R.drawable.pisa)
+        val colosseum = LandMark("Colosseum", "Italy", R.drawable.colosseum)
+        val eiffel = LandMark("Eiffel", "France", R.drawable.eiffel)
+        val london_bridge = LandMark("London Bridge", "England", R.drawable.london_bridge)
+        val pisa = LandMark("Pisa", "Italy", R.drawable.pisa)
+        
 
         landMarkArrayList = ArrayList<LandMark>()
 
@@ -32,9 +35,16 @@ class MainActivity : AppCompatActivity() {
         landMarkArrayList.add(london_bridge)
         landMarkArrayList.add(pisa)
 
+        //RecyclerView
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        val adapter = LandmarkAdapter(landMarkArrayList)
+        binding.recyclerView.adapter = adapter
+
         //adapter :  layout & data
 
         //mapping -> bir veriyi başka bir veriye benzetmeye veya değiştirmeye yarar.
+
+        /* listView
 
         val adapter = ArrayAdapter(this,android.R.layout.simple_list_item_1,landMarkArrayList.map { LandMark -> LandMark.name })
         binding.listView.adapter = adapter
@@ -45,6 +55,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
+        */
     }
 }
