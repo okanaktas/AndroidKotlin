@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         val eiffel = LandMark("Eiffel", "France", R.drawable.eiffel)
         val london_bridge = LandMark("London Bridge", "England", R.drawable.london_bridge)
         val pisa = LandMark("Pisa", "Italy", R.drawable.pisa)
-        
+
 
         landMarkArrayList = ArrayList<LandMark>()
 

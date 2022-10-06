@@ -22,7 +22,6 @@ class LandmarkAdapter(val landmarkList : ArrayList<LandMark>) : RecyclerView.Ada
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context,DetailsActivity::class.java)
             intent.putExtra("landmark",landmarkList.get(position))
-            //MySingleton.selectedLandmark = landmarkList.get(position))
             holder.itemView.context.startActivity(intent)
         }
     }
