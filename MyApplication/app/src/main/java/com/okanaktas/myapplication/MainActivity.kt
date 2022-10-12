@@ -17,51 +17,27 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
 
-        try{
+        try {
 
-            val myDatabase = this.openOrCreateDatabase("School", MODE_PRIVATE,null)
+            val myDatabase = this.openOrCreateDatabase("School", MODE_PRIVATE, null)
 
             myDatabase.execSQL("CREATE TABLE IF NOT EXISTS class(name VARCHAR, age INT)")
-            myDatabase.execSQL("INSERT INTO class (name, age) VALUES ('okan',26)")
+            myDatabase.execSQL("INSERT INTO class(name, age) VALUES ('okan',26)")
 
-            val cursor = myDatabase.rawQuery("SELECT * FROM class",null)
+            val cursor = myDatabase.rawQuery("SELECT * FROM class", null)
 
-            val index1 = cursor.getColumnIndex("name")
-            val index2 = cursor.getColumnIndex("age")
+            val nameIX = cursor.getColumnIndex("name")
+            val ageIX = cursor.getColumnIndex("age")
 
-            while(cursor.moveToNext()){
-                println("Birinci deger: " + cursor.getString(index1))
-                println("Ikınci deger: " + cursor.getInt(index2))
-            }
-            cursor.close()
-
-
-        }catch(e:Exception){
-            e.printStackTrace()
-        }
-
-
-    /*    try {
-
-            val database = this.openOrCreateDatabase("Home", MODE_PRIVATE, null)
-            database.execSQL("CREATE TABLE IF NOT EXISTS birol(name VARCHAR,number INT)")
-            database.execSQL("INSERT INTO birol (name, number) VALUES('aybuke',22)")
-
-            val cursor = database.rawQuery("SELECT * FROM birol",null)
-
-            val index1 = cursor.getColumnIndex("name")
-            var index2 = cursor.getColumnIndex("number")
-
-            while (cursor.moveToNext()){
-                println("Gelen isim degeri: " + cursor.getString(index1))
-                println("Gelen Sayi  degeri: " + cursor.getString(index2))
+            while (cursor.moveToNext()) {
+                println("Values of first: " + cursor.getString(nameIX))
+                println("Values of second: " + cursor.getInt(ageIX))
             }
             cursor.close()
 
         } catch (e: Exception) {
             e.printStackTrace()
         }
-*/
 
         /*try {
             val myDatabase = this.openOrCreateDatabase("Musicians", MODE_PRIVATE, null)
