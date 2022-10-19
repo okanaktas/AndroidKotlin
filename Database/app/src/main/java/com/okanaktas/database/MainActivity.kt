@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
 
         try {
             val myDatabase = this.openOrCreateDatabase("Musicians", MODE_PRIVATE, null)
-            myDatabase.execSQL("CREATE TABLE IF NOT EXISTS musicians (name VARCHAR, age INT)")
+            myDatabase.execSQL("CREATE TABLE IF NOT EXISTS musicians (id, INTEGER PRIMARY KEY,name VARCHAR, age INT)")
             myDatabase.execSQL("INSERT INTO musicians (name , age) VALUES ('Okan' ,26)")
 
             val cursor = myDatabase.rawQuery("SELECT * FROM musicians", null)
