@@ -118,11 +118,20 @@ class MainActivity : AppCompatActivity() {
         var runnable = object : Runnable {
             override fun run() {
                 binding.textViewTimer.setText("Timer: ${timer}")
-                handler.postDelayed(runnable,1000)
+                handler.postDelayed(runnable, 1000)
                 timer++
             }
         }
         handler.post(runnable)
+        binding.buttonClick.isEnabled = false
+
+    }
+
+    fun buttonStop(view: View) {
+        handler.removeCallbacks(runnable)
+        timer = 0
+        binding.textViewTimer.setText("Timer: $timer")
+        binding.buttonClick.isEnabled = true
 
     }
 }
