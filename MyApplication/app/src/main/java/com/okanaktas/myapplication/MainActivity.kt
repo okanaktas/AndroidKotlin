@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity() {
 
         var runnable = object : Runnable {
             override fun run() {
-                binding.textViewTimer.setText("Timer: " + timer)
+                binding.textViewTimer.setText("Timer: ${timer}")
                 handler.postDelayed(runnable,1000)
                 timer++
             }
