@@ -9,6 +9,10 @@ import com.okanaktas.myapplication.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
+    var runnable: Runnable = Runnable {}
+    var handler: Handler = Handler()
+
+    var timer = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,19 +20,43 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+
         try {
 
-            val myDatabase = this.openOrCreateDatabase("School", MODE_PRIVATE,null)
+            val myDatase = this.openOrCreateDatabase("Home", MODE_PRIVATE, null)
 
-            myDatabase.execSQL("CREATE TABLE IF NOT EXISTS person (name VARCHAR, age INT)")
-            myDatabase.execSQL("INSERT INTO person (name, age) VALUES ('aybuke',22)")
+            myDatase.execSQL("CREATE TABLE IF NOT EXISTS person (name VARCHAR, age INT)")
+            myDatase.execSQL("INSERT INTO person(name , age) VALUES ('aybuke, 22')")
 
-            var cursor = myDatabase.rawQuery("SELECT * FROM person",null)
+            val cursor = myDatase.rawQuery("SELECT * FROM person", null)
 
             val nameIX = cursor.getColumnIndex("name")
             var ageIX = cursor.getColumnIndex("age")
 
-            while(cursor.moveToNext()){
+            while (cursor.moveToNext()) {
+                println("Name Info: " + nameIX)
+                println("Age Info: " + ageIX)
+            }
+            cursor.close()
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        /*
+        try {
+
+            val myDatabase = this.openOrCreateDatabase("School", MODE_PRIVATE, null)
+
+            myDatabase.execSQL("CREATE TABLE IF NOT EXISTS person (name VARCHAR, age INT)")
+            myDatabase.execSQL("INSERT INTO person (name, age) VALUES ('aybuke',22)")
+
+            var cursor = myDatabase.rawQuery("SELECT * FROM person", null)
+
+            val nameIX = cursor.getColumnIndex("name")
+            var ageIX = cursor.getColumnIndex("age")
+
+            while (cursor.moveToNext()) {
                 println("Birinci deger: " + cursor.getString(nameIX))
                 println("Ikinci deger: " + cursor.getInt(ageIX))
             }
@@ -38,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
+*/
 
         /*
         try {
@@ -83,5 +111,18 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 */
+    }
+
+    fun buttonClick(view: View) {
+
+        var runnable = object : Runnable {
+            override fun run() {
+                binding.textViewTimer.setText("Timer: " + timer)
+                handler.postDelayed(runnable,1000)
+                timer++
+            }
+        }
+        handler.post(runnable)
+
     }
 }
