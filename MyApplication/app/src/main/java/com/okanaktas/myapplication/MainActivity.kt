@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity() {
         binding.buttonClick.isEnabled = false
 
     }
-
+//buttonStop
     fun buttonStop(view: View) {
         handler.removeCallbacks(runnable)
         timer = 0
