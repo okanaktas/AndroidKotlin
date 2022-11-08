@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-
+//update    
         try {
 
             val myDatase = this.openOrCreateDatabase("Home", MODE_PRIVATE, null)
