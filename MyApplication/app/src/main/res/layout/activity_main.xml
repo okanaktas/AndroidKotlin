@@ -7,36 +7,27 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/textViewTimer"
+        android:id="@+id/textViewUpTimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Timer: 0"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Upper Timer:"
+        tools:layout_editor_absoluteX="44dp"
+        tools:layout_editor_absoluteY="329dp" />
 
     <Button
-        android:id="@+id/buttonClick"
+        android:id="@+id/buttonUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="41dp"
-        android:onClick="buttonClick"
-        android:text="Start"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTimer" />
+        android:text="Upper"
+        tools:layout_editor_absoluteX="44dp"
+        tools:layout_editor_absoluteY="367dp" />
 
-    <Button
-        android:id="@+id/buttonStop"
+    <TextView
+        android:id="@+id/textView2DownTimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:onClick="buttonStop"
-        android:text="Stop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonClick" />
+        android:text="TextView"
+        tools:layout_editor_absoluteX="296dp"
+        tools:layout_editor_absoluteY="329dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
