@@ -7,7 +7,7 @@ import android.os.Handler
 import android.view.View
 import com.okanaktas.forwardcounterandreversecounter.databinding.ActivityMainBinding
 
-class MainActivity(millisInFuture: Long) : AppCompatActivity() {
+class MainActivity: AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     var runnable: Runnable = Runnable {}
@@ -45,7 +45,7 @@ class MainActivity(millisInFuture: Long) : AppCompatActivity() {
         binding.textViewForward.setText("Forward Counter: ")
     }
 
-    fun buttonReverse(view: View) {/*
+    fun buttonReverse(view: View) {
         downCounter = Integer.parseInt(binding.editText.text.toString())
 
         object : CountDownTimer(1000,  100) {
@@ -56,11 +56,11 @@ class MainActivity(millisInFuture: Long) : AppCompatActivity() {
             override fun onFinish() {
                 binding.textViewReverse.setText("Reverse Counter: Finished!")
             }
-        }*/
+        }
     }
 
-    fun buttonStopReverse(view: View) {/*
+    fun buttonStopReverse(view: View) {
         binding.buttonStopReverse.isEnabled = true
         binding.textViewForward.setText("Reverse Counter: ")
-    */}
+    }
 }
