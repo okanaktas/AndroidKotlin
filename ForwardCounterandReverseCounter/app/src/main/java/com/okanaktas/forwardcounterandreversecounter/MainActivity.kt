@@ -46,11 +46,11 @@ class MainActivity: AppCompatActivity() {
     }
 
     fun buttonReverse(view: View) {
-        downCounter = Integer.parseInt(binding.editText.text.toString())
+        downCounter = binding.editText.text.toString().toInt()
 
-        object : CountDownTimer(1000,  100) {
-            override fun onTick(downCounter: Long) {
-                binding.textViewReverse.setText("Reverse Counter: $downCounter/1000")
+        object : CountDownTimer(10000,  1000) {
+            override fun onTick(p0 : Long) {
+                binding.textViewReverse.setText("Reverse Counter: ${p0/1000}")
             }
 
             override fun onFinish() {
