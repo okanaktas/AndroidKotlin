@@ -15,8 +15,6 @@ class MainActivity: AppCompatActivity() {
 
     var counter = 0;
 
-    var downCounter = 0;
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -46,7 +44,6 @@ class MainActivity: AppCompatActivity() {
     }
 
     fun buttonReverse(view: View) {
-        downCounter = binding.editText.text.toString().toInt()
 
         object : CountDownTimer(10000,  1000) {
             override fun onTick(p0 : Long) {
