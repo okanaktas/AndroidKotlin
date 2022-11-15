@@ -5,15 +5,18 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
 import android.view.View
+import android.widget.Toast
 import com.okanaktas.forwardcounterandreversecounter.databinding.ActivityMainBinding
 
-class MainActivity: AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     var runnable: Runnable = Runnable {}
     var handler: Handler = Handler()
 
-    var counter = 0;
+    var counter = 0
+
+    var inputNumber = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,19 +48,29 @@ class MainActivity: AppCompatActivity() {
 
     fun buttonReverse(view: View) {
 
-        object : CountDownTimer(10000,  1000) {
-            override fun onTick(p0 : Long) {
-                binding.textViewReverse.setText("Reverse Counter: ${p0/1000}")
-            }
+        if (binding.editTextNumber.text.isEmpty()) {
+            Toast.makeText(applicationContext, "Entry Number!", Toast.LENGTH_LONG).show()
+        } else {
 
-            override fun onFinish() {
-                binding.textViewReverse.setText("Reverse Counter: Finished!")
+            inputNumber = binding.editTextNumber.text.toString().toInt()
+
+            runnable = object : Runnable {
+                override fun run() {
+                    binding.textViewReverse.setText("Reverse Counter: $inputNumber")
+                    inputNumber--
+                    handler.postDelayed(runnable, 1000)
+                }
             }
+            handler.post(runnable)
+            binding.buttonReverse.isEnabled = false
         }
     }
 
     fun buttonStopReverse(view: View) {
+        handler.removeCallbacks(runnable)
         binding.buttonStopReverse.isEnabled = true
-        binding.textViewForward.setText("Reverse Counter: ")
+        inputNumber = 0
+        binding.textViewReverse.setText("Reverse Counter: ")
+        binding.editTextNumber.setText("")
     }
 }
