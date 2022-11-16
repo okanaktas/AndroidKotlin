@@ -6,28 +6,51 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textViewUpTimer"
+    <EditText
+        android:id="@+id/editTextNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Upper Timer:"
-        tools:layout_editor_absoluteX="44dp"
-        tools:layout_editor_absoluteY="329dp" />
+        android:layout_marginBottom="25dp"
+        android:ems="10"
+        android:hint="Number:"
+        android:inputType="number"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewCounter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:layout_marginBottom="24dp"
+        android:text="Counter:"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCounter"
+        app:layout_constraintStart_toStartOf="@+id/buttonCounter" />
 
     <Button
-        android:id="@+id/buttonUp"
+        android:id="@+id/buttonCounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Upper"
-        tools:layout_editor_absoluteX="44dp"
-        tools:layout_editor_absoluteY="367dp" />
+        android:onClick="buttonCounter"
+        android:text="Counter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView2DownTimer"
+    <Button
+        android:id="@+id/buttonStop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="296dp"
-        tools:layout_editor_absoluteY="329dp" />
-
+        android:onClick="buttonStop"
+        android:text="Stop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.588" />
 </androidx.constraintlayout.widget.ConstraintLayout>
