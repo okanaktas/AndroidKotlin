@@ -50,6 +50,8 @@ class MainActivity : AppCompatActivity() {
 
     fun buttonStart(view: View) {
 
+        counter = binding.editTextNumber.text.toString().toInt()
+
         runnable = object : Runnable {
             override fun run() {
 
@@ -67,5 +69,6 @@ class MainActivity : AppCompatActivity() {
         handler.removeCallbacks(runnable)
         counter = 0
         binding.buttonStart.isEnabled = true
+        binding.textViewCounter.setText("Counter: ")
     }
 }
