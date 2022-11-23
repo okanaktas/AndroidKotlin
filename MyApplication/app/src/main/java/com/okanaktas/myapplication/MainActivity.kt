@@ -56,10 +56,11 @@ class MainActivity : AppCompatActivity() {
                 binding.textViewCounter.setText("Counter: $counter")
                 counter++
                 handler.postDelayed(runnable, 1000)
-                binding.buttonStart.isEnabled = false
             }
         }
         handler.post(runnable)
+        binding.buttonStart.isEnabled = false
+
     }
 
     fun buttonStop(view: View) {
