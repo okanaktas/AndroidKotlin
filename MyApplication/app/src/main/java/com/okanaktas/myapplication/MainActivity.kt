@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
     }
 */
 
-    //database
+    //database update
 
     /*
     try {
