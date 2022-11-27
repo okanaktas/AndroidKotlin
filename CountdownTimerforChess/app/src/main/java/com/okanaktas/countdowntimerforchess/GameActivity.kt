@@ -2,6 +2,7 @@ package com.okanaktas.countdowntimerforchess
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color.green
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -47,7 +48,14 @@ class GameActivity : AppCompatActivity() {
 
     }
 
+    @SuppressLint("ResourceAsColor")
     fun textView1(view: View) {
+        binding.textViewPlayer2Time.setBackgroundColor(R.color.black)
+        binding.textViewPlayer2Time.setTextColor(R.color.white)
+
+        binding.textViewPlayer1Time.setBackgroundColor(R.color.white)
+        binding.textViewPlayer1Time.setTextColor(R.color.black)
+
         binding.textViewPlayer2Time.isEnabled = true
         runnable2 = object : Runnable {
             override fun run() {
@@ -62,7 +70,14 @@ class GameActivity : AppCompatActivity() {
 
     }
 
+    @SuppressLint("ResourceAsColor")
     fun textView2(view: View) {
+        binding.textViewPlayer1Time.setBackgroundColor(R.color.black)
+        binding.textViewPlayer1Time.setTextColor(R.color.white)
+
+        binding.textViewPlayer2Time.setBackgroundColor(R.color.white)
+        binding.textViewPlayer2Time.setTextColor(R.color.black)
+
         binding.textViewPlayer1Time.isEnabled = true
         runnable1 = object : Runnable {
             override fun run() {
@@ -82,16 +97,6 @@ class GameActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun imageViewReset(view: View) {
-        handler1.removeCallbacks(runnable1)
-        handler2.removeCallbacks(runnable2)
-
-        timer1 = minute * 60
-        timer2 = minute * 60
-
-        binding.textViewPlayer1Time.setText("${minute*60}")
-        binding.textViewPlayer2Time.setText("${minute*60}")
-    }
     fun imageViewPause(view: View) {
         handler1.removeCallbacks(runnable1)
         handler2.removeCallbacks(runnable2)
