@@ -15,13 +15,13 @@ import com.okanaktas.countdowntimerforchess.databinding.ActivityMainBinding
         val view = binding.root
         setContentView(view)
 
-
-
-
     }
 
      fun buttonGo(view : View){
-         val intent = Intent()
-         intent
+         val intent = Intent(applicationContext,GameActivity::class.java)
+         intent.putExtra("name", binding.editTextPlayer1.text.toString())
+         intent.putExtra("SurName", binding.editTextPlayer2.text.toString())
+         intent.putExtra("minute", binding.editTextTimer.text.toString().toInt())
+         startActivity(intent)
      }
 }
