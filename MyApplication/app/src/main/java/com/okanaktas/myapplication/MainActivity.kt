@@ -35,31 +35,5 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 
-
-        /*
-    try {
-
-        val myDatabase = this.openOrCreateDatabase("School", MODE_PRIVATE, null)
-
-        myDatabase.execSQL("CREATE TABLE IF NOT EXISTS person (name VARCHAR, age INT)")
-        myDatabase.execSQL("INSERT INTO person (name, age) VALUES ('aybuke',22)")
-
-        var cursor = myDatabase.rawQuery("SELECT * FROM person", null)
-
-        val nameIX = cursor.getColumnIndex("name")
-        var ageIX = cursor.getColumnIndex("age")
-
-        while (cursor.moveToNext()) {
-            println("Birinci deger: " + cursor.getString(nameIX))
-            println("Ikinci deger: " + cursor.getInt(ageIX))
-        }
-        cursor.close()
-
-
-    } catch (e: Exception) {
-        e.printStackTrace()
-    }
-*/
-
     }
 }
