@@ -1,5 +1,6 @@
 package com.okanaktas.countdowntimerforchess
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,6 +20,8 @@ class GameActivity : AppCompatActivity() {
     var timer1 = 0
     var timer2 = 0
 
+    var minute = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGameBinding.inflate(layoutInflater)
@@ -30,13 +33,17 @@ class GameActivity : AppCompatActivity() {
         val inputPlayer2 = intent.getStringExtra("player2")
         val inputMinute = intent.getStringExtra("minute").toString().toInt()
 
-        timer1 = inputMinute * 60
-        timer2 = inputMinute * 60
+        minute = inputMinute
+
+        timer1 = minute * 60
+        timer2 = minute * 60
 
         binding.textViewNamePlayer1.setText("$inputPlayer1")
         binding.textViewNamePlayer2.setText("$inputPlayer2")
         binding.textViewPlayer1Time.setText("$timer1")
         binding.textViewPlayer2Time.setText("$timer2")
+
+        binding.imageViewPlay.isEnabled=false
 
     }
 
@@ -75,18 +82,24 @@ class GameActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun imageViewReset(view: View) {}
-    fun imageViewPause(view: View) {}
+    fun imageViewReset(view: View) {
+        handler1.removeCallbacks(runnable1)
+        handler2.removeCallbacks(runnable2)
+
+        timer1 = minute * 60
+        timer2 = minute * 60
+
+        binding.textViewPlayer1Time.setText("${minute*60}")
+        binding.textViewPlayer2Time.setText("${minute*60}")
+    }
+    fun imageViewPause(view: View) {
+        handler1.removeCallbacks(runnable1)
+        handler2.removeCallbacks(runnable2)
+        binding.imageViewPlay.isEnabled = true
+    }
 
     fun imageViewPlay(view: View) {
-        runnable1 = object : Runnable {
-            override fun run() {
-                binding.textViewPlayer1Time.setText("$timer1")
-                timer1--
-                handler1.postDelayed(runnable1, 1000)
-            }
-        }
         handler1.post(runnable1)
-        binding.imageViewPlay.isEnabled = false
+        handler2.post(runnable2)
     }
 }

@@ -21,6 +21,7 @@
         android:rotationY="0"
         android:text="Time:"
         android:textColor="#000000"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,6 +34,7 @@
         android:rotation="180"
         android:text="Player 2"
         android:textColor="#000000"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewPlayer2Time" />
@@ -106,6 +108,7 @@
         android:layout_marginBottom="5dp"
         android:text="Player 1"
         android:textColor="#000000"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textViewPlayer1Time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -121,6 +124,7 @@
         android:onClick="textView1"
         android:text="Time:"
         android:textColor="#000000"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
