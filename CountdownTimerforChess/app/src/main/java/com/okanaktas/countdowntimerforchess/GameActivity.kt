@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.widget.Toast
 import com.okanaktas.countdowntimerforchess.databinding.ActivityGameBinding
 import com.okanaktas.countdowntimerforchess.databinding.ActivityMainBinding
 
@@ -61,6 +62,11 @@ class GameActivity : AppCompatActivity() {
         binding.textViewPlayer1Time.isEnabled = false
         handler1.removeCallbacks(runnable1)
 
+        if (timer2 == 0) {
+            handler2.removeCallbacks(runnable2)
+            Toast.makeText(applicationContext, "Finished Time!", Toast.LENGTH_LONG).show()
+        }
+
     }
 
     fun textView2(view: View) {
@@ -75,7 +81,10 @@ class GameActivity : AppCompatActivity() {
         handler1.post(runnable1)
         binding.textViewPlayer2Time.isEnabled = false
         handler2.removeCallbacks(runnable2)
-
+        if (timer1 == 0) {
+            handler1.removeCallbacks(runnable1)
+            Toast.makeText(applicationContext, "Finished Time!", Toast.LENGTH_LONG).show()
+        }
     }
 
     fun imageViewHome(view: View) {
