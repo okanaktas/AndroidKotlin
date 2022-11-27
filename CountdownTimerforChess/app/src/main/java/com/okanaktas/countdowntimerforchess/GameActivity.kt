@@ -44,18 +44,11 @@ class GameActivity : AppCompatActivity() {
         binding.textViewPlayer1Time.setText("$timer1")
         binding.textViewPlayer2Time.setText("$timer2")
 
-        binding.imageViewPlay.isEnabled=false
+        binding.imageViewPlay.isEnabled = false
 
     }
 
-    @SuppressLint("ResourceAsColor")
     fun textView1(view: View) {
-        binding.textViewPlayer2Time.setBackgroundColor(R.color.black)
-        binding.textViewPlayer2Time.setTextColor(R.color.white)
-
-        binding.textViewPlayer1Time.setBackgroundColor(R.color.white)
-        binding.textViewPlayer1Time.setTextColor(R.color.black)
-
         binding.textViewPlayer2Time.isEnabled = true
         runnable2 = object : Runnable {
             override fun run() {
@@ -70,14 +63,7 @@ class GameActivity : AppCompatActivity() {
 
     }
 
-    @SuppressLint("ResourceAsColor")
     fun textView2(view: View) {
-        binding.textViewPlayer1Time.setBackgroundColor(R.color.black)
-        binding.textViewPlayer1Time.setTextColor(R.color.white)
-
-        binding.textViewPlayer2Time.setBackgroundColor(R.color.white)
-        binding.textViewPlayer2Time.setTextColor(R.color.black)
-
         binding.textViewPlayer1Time.isEnabled = true
         runnable1 = object : Runnable {
             override fun run() {
