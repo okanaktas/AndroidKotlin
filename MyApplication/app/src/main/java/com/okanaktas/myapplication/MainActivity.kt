@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         try {
             val database = this.openOrCreateDatabase("Office", MODE_PRIVATE, null)
 
-            database.execSQL("CREATE TABLE IF NOT EXISTS person (name VARCHAR ,age INT)")
+            database.execSQL("CREATE TABLE IF NOT EXISTS person (id INTEGER PRIMARY KEY, name VARCHAR ,age INT)")
             database.execSQL("INSERT INTO person (name, age)VALUES('okan',27)")
 
             var cursor = database.rawQuery("SELECT * FROM person", null)
