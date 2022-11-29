@@ -16,22 +16,23 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         try {
-            val myDatabase = this.openOrCreateDatabase("School", MODE_PRIVATE,null)
+            val database = this.openOrCreateDatabase("Office", MODE_PRIVATE, null)
 
-            myDatabase.execSQL("CREATE TABLE IF NOT EXISTS student (name VARCHAR, age INT)")
-            myDatabase.execSQL("INSERT INTO person (name,age) VALUES ('okan',26)")
+            database.execSQL("CREATE TABLE IF NOT EXISTS person (name VARCHAR ,age INT)")
+            database.execSQL("INSERT INTO person (name, age)VALUES('okan',27)")
 
-            var cursor = myDatabase.rawQuery("SELECT * FROM person",null)
+            var cursor = database.rawQuery("SELECT * FROM person", null)
 
-            val nameIX = cursor.getColumnIndex("name")
+            var nameIX = cursor.getColumnIndex("name")
             var ageIX = cursor.getColumnIndex("age")
 
-            while(cursor.moveToNext()){
-                println("Birinci deger: " + cursor.getString(nameIX))
-                println("Ikinci deger: " + cursor.getString(ageIX))
+            while () {
+                print("First value: " + cursor.getString(nameIX))
+                print("Second value: " + cursor.getString(ageIX))
             }
             cursor.close()
-        }catch (e: Exception){
+
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
