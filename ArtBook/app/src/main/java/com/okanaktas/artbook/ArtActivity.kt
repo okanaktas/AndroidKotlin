@@ -77,7 +77,7 @@ class ArtActivity : AppCompatActivity() {
                 if (result.resultCode == RESULT_OK) {
                     val intentFromResult = result.data
                     if (intentFromResult != null) {
-                        val imageData = intent.data
+                        val imageData = intentFromResult.data
                         //binding.imageView.setImageURI(imageData)
                         if (imageData != null) {
                             try {
@@ -104,14 +104,14 @@ class ArtActivity : AppCompatActivity() {
             }
         permissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestPermission()) { result ->
-                if () {
+                if (result) {
                     //permissions granted
                     val intentToGallery =
                         Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                     activityResultLauncher.launch(intentToGallery)
                 } else {
 //permissions denied
-                    Toast.makeText(this@ArtActivity, "Permissions Needed!", Toast.LENGTH_LONG)
+                    Toast.makeText(this@ArtActivity, "Permissions Needed!", Toast.LENGTH_SHORT)
                         .show()
                 }
             }
