@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
     tools:context=".MainActivity">
 
     <TextView
@@ -12,20 +11,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:layout_marginBottom="38dp"
+        android:layout_marginBottom="40dp"
         android:text="Find the Number in My Mind"
         android:textColor="#000000"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/button1"
+        app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/buttonYourself"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="85dp"
+        android:background="#0083CE"
+        android:text="Play"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/editTextNumber"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
+
+    <Button
+        android:id="@+id/button"
         android:layout_width="250dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="29dp"
+        android:layout_marginBottom="30dp"
         android:background="#24a0ed"
         android:text="0 - 10"
         android:textColor="#FFFFFF"
@@ -38,20 +49,20 @@
         android:id="@+id/button2"
         android:layout_width="250dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="29dp"
+        android:layout_marginBottom="30dp"
         android:background="#0096e2"
         android:text="0 - 50"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button1" />
+        app:layout_constraintTop_toBottomOf="@+id/button" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="250dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="41dp"
+        android:layout_marginBottom="40dp"
         android:background="#008dd8"
         android:text="0 - 100"
         android:textColor="#FFFFFF"
@@ -64,7 +75,7 @@
         android:id="@+id/editTextNumber"
         android:layout_width="250dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="30dp"
         android:backgroundTint="#808080"
         android:ems="10"
         android:hint="Enter Yourself:"
@@ -75,16 +86,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button3" />
-
-    <Button
-        android:id="@+id/buttonYourself"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="84dp"
-        android:background="#0083CE"
-        android:text="Play"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/editTextNumber"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
