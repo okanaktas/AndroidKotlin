@@ -37,4 +37,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+    fun buttonStart(view : View){}
+    fun buttonStop(view : View){}
 }
