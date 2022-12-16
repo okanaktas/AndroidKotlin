@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
             var nameIX = cursor.getColumnIndex("name")
             var ageIX = cursor.getColumnIndex("age")
 
+            //imleç cursor
             while () {
                 print("First value: " + cursor.getString(nameIX))
                 print("Second value: " + cursor.getString(ageIX))
