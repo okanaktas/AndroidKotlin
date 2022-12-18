@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
+//public
         try {
             val database = this.openOrCreateDatabase("Office", MODE_PRIVATE, null)
 
