@@ -39,7 +39,7 @@ var value
         }
 
     }
-
+ //2 button
     fun buttonStart(view : View){}
     fun buttonStop(view : View){}
 }
