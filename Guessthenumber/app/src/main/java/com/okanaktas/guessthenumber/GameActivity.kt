@@ -15,11 +15,22 @@ class GameActivity : AppCompatActivity() {
 
     var timer = 61
 
+    var number = 0
+
+    var inputEasy = 0
+    var inputMedium = 0
+    var inputHard = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGameBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+
+        inputEasy = intent.getIntExtra("valueEasy", 0)
+        //inputMedium = intent.getIntExtra("valueMedium", 0)
+        //inputHard = intent.getIntExtra("valueHard", 0)
 
         if (timer > 0) {
             runnable = object : Runnable {
@@ -30,15 +41,21 @@ class GameActivity : AppCompatActivity() {
                 }
             }
             handler.post(runnable)
-        }
-        else{
+        } else {
             binding.textViewInfo.setText("Süre Bitti! ")
             binding.buttonSend.isEnabled = false
         }
     }
 
-
     fun buttonSend(view: View) {
+        number = Integer.parseInt(binding.editTextNumber.text.toString())
+        System.out.println(number)
+        if (number == inputEasy) {
+            binding.textViewInfo.setText("Tebrikler")
+        } else {
+            binding.editTextNumber.setText("")
+            handler.removeCallbacks(runnable)
+        }
 
     }
 }
