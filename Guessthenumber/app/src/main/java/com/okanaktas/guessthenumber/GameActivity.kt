@@ -10,8 +10,8 @@ import com.okanaktas.guessthenumber.databinding.ActivityMainBinding
 class GameActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGameBinding
 
-    var runnable : Runnable = Runnable{}
-    var handler : Handler = Handler()
+    var runnable: Runnable = Runnable {}
+    var handler: Handler = Handler()
 
     var timer = 61
 
@@ -21,18 +21,23 @@ class GameActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        runnable = object : Runnable{
-            override fun run() {
-                timer--
-                binding.textViewTimer.setText("Timer: " )
+        if (timer > 0) {
+            runnable = object : Runnable {
+                override fun run() {
+                    timer--
+                    binding.textViewTimer.setText("Timer: $timer")
+                    handler.postDelayed(runnable, 1000)
+                }
             }
+            handler.post(runnable)
         }
-
+        else{
+            binding.textViewInfo.setText("Süre Bitti! ")
+        }
     }
 
 
-
-    fun buttonSend(view : View){
+    fun buttonSend(view: View) {
 
     }
 }
