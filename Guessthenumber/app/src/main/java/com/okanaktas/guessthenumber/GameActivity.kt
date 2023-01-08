@@ -33,6 +33,7 @@ class GameActivity : AppCompatActivity() {
         }
         else{
             binding.textViewInfo.setText("Süre Bitti! ")
+            binding.buttonSend.isEnabled = false
         }
     }
 
