@@ -13,7 +13,7 @@ class GameActivity : AppCompatActivity() {
     var runnable : Runnable = Runnable{}
     var handler : Handler = Handler()
 
-    var timer = 0
+    var timer = 61
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +21,12 @@ class GameActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        
+        runnable = object : Runnable{
+            override fun run() {
+                timer--
+                binding.textViewTimer.setText("Timer: " )
+            }
+        }
 
     }
 
