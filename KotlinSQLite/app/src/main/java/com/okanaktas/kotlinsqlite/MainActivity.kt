@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
             val myDatabase = this.openOrCreateDatabase("Class", Context.MODE_PRIVATE, null)
 
-            myDatabase.execSQL("CREATE TABLE IF NOT EXISTS person (name VARCHAR, age INT) ")
+            myDatabase.execSQL("CREATE TABLE IF NOT EXISTS person (id INTEGER PRIMARY KEY,name VARCHAR, age INT) ")
 
             myDatabase.execSQL("INSERT INTO person(name, age) VALUES ('okan',27)")
 
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
                 println("Name: " + cursor.getString(nameIX))
                 println("Age: " + cursor.getInt(ageIX))
             }
-            cursor.close() 
+            cursor.close()
 
 
         } catch (e: Exception) {
