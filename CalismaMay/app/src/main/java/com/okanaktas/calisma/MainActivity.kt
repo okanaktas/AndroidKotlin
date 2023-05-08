@@ -17,9 +17,16 @@ class MainActivity : AppCompatActivity() {
         arrayOkan.add(30)
         arrayOkan.add("aktas")
 
-        println("Dizi degerleri ${arrayOkan}")
+        println("Dizi degerleri ${arrayOkan }")
 
+        //setOf = aynı degerleri sadece bir kere alıyor.
+        val mySet = setOf<Any>(1,2,3,3,4)
+        print(mySet.size)
 
+        //For Each
+
+        mySet.forEach { print(it) }
+        
 
     }
 }
