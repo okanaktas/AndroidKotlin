@@ -8,6 +8,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        
+
+        val arrayOkan = arrayListOf<Any>()
+
+        arrayOkan.add("bugra")
+        arrayOkan.add("okan")
+        arrayOkan.add(30)
+        arrayOkan.add("aktas")
+
+
+
     }
 }
