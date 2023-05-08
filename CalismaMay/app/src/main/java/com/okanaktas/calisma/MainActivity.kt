@@ -26,7 +26,24 @@ class MainActivity : AppCompatActivity() {
         //For Each
 
         mySet.forEach { print(it) }
-        
+
+
+        //!! Önemli HashMap
+
+        val fruits = arrayOf<String>("Apple","Banana")
+        val calories = arrayOf<Int>(100,150)
+
+        println("${fruits[0]} + ${calories[0]}")
+
+        //Üsttekilerin yerine
+
+        val fruitsAndCalories = hashMapOf<String,Int>()
+        fruitsAndCalories.put("Apple",100)
+        fruitsAndCalories.put("Banana",150)
+
+        println(fruitsAndCalories["Apple"])
+
+
 
     }
 }
