@@ -1,8 +1,8 @@
 package com.okanaktas.classes
 
-class Person {
+class Person (var name : String, var age : Int, var job : String) {
 
-    var name = ""
+   /* var name = ""
     var age = 0
     var job = ""
 
@@ -10,5 +10,5 @@ class Person {
         this.name = name
         this.age = age
         this.job = job
-    }
+    }*/
 }
