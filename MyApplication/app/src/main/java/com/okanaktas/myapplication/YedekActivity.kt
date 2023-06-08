@@ -15,7 +15,7 @@ class YedekActivity : AppCompatActivity() {
 
         val intent = intent
 
-        val newDeger = intent.getStringExtra("deger")
+        val newDeger = intent.getStringExtra("deger")!!.toInt()
 
         binding.textViewShow.setText(newDeger)
     }
