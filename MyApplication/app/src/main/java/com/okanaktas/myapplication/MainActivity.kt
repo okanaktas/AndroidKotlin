@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        //Saniye hızı
         runnableCounter = object : Runnable {
             override fun run() {
                 handler.postDelayed(runnableCounter, 1000)
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         }
         handler.post(runnableCounter)
 
+        //Normal sayı sayma
         runnable = object : Runnable {
             override fun run() {
                 handler.postDelayed(runnable, counter.toLong())
