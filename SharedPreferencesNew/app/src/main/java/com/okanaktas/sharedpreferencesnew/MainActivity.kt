@@ -1,11 +1,11 @@
-package com.okanaktas.myapplication
+package com.okanaktas.sharedpreferencesnew
 
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
-import com.okanaktas.myapplication.databinding.ActivityMainBinding
+import com.okanaktas.sharedpreferencesnew.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         var userAgePref = sharedPref.getInt("age", -1)
         //o değer gelmediğinde -1 olacağı için değer if kontrolü ile kullanıcıya -1 yazmasını engelliyoruz.
         if (userAgePref == -1) {
-            binding.textViewAge.setText("Yaşınızı Doğru Giriniz!")
+            binding.textViewAge.setText("Your Age: ")
         } else {
             binding.textViewAge.setText("Your Age: ${userAgePref}")
         }
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     fun buttonSave(view: View) {
         var age = binding.editTextAge.text.toString().toIntOrNull()
         if (age != null) {
-           binding.textViewAge.setText("Your Age : ${age}")
+            binding.textViewAge.setText("Your Age : ${age}")
             sharedPref.edit().putInt("age", age).apply()
         } else {
             binding.textViewAge.setText("Yanlış bir yerler oldu.")
