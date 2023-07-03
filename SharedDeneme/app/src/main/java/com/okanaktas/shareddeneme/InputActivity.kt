@@ -1,5 +1,6 @@
 package com.okanaktas.shareddeneme
 
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,12 +19,13 @@ class InputActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        sharedPref = this.getSharedPreferences("com.okanaktas.shareddeneme", MODE_PRIVATE)
 
     }
 
     fun button(view: View) {
-        var deger = binding.textView.setText(binding.editTextText.text)
-        sharedPref.edit().putString("deger",deger.toString()).apply()
-
+        sharedPref.edit().putString("deger",binding.editTextText.text.toString()).apply()
+        var intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 }

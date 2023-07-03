@@ -18,8 +18,10 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        var newDeger = sharedPref.getString("deger","okan")
-        binding.textViewResult.setText(newDeger.toString())
+        sharedPref = this.getSharedPreferences("com.okanaktas.shareddeneme", MODE_PRIVATE)
+
+        var newDeger = sharedPref.getString("deger","Merhaba")
+        binding.textViewResult.setText(newDeger)
 
     }
     fun buttonGo(view : View){
