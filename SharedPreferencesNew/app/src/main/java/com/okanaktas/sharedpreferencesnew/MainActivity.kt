@@ -12,8 +12,6 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var sharedPref: SharedPreferences
 
-    //lateinit var sad : Int
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
