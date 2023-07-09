@@ -1,5 +1,6 @@
 package com.okanaktas.myapplication
 
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,9 +11,7 @@ import com.okanaktas.myapplication.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    lateinit var sharedPref: SharedPreferences
-
-    //lateinit var sad : Int
+    lateinit var sharedPref : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,33 +19,14 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        //İlk kısma genelde paket ismi, ikinci kısma nasıl bir mode kullanacağımızı yazarız. Başka bir uygulamnın
-        // verilerimizi kullanmasını istemediğimiz için mode_private kullanıyoruz.
         sharedPref = this.getSharedPreferences("com.okanaktas.myapplication", MODE_PRIVATE)
-//veri yazacak veya güncelleyeceksek edit diyoruz. put fonksiyonları çıkıyor karşımıza orada da anahtar ve deger veriyoruz.
-        // Halihazırda bir veriyi almak istiyorsak get fonksiyonlarını kullanıyoruz ve
-        // kaydettiğimiz anahtarı veriyoruz o bize bir deger veriyor
 
-//aşağıda gelen değeri alıyoruz. buttonSave de "age" dediğimiz için yine age olarak çektik. İkinci kısım ise
-        //o deger gelmezse ne yazacağı
-        var userAgePref = sharedPref.getInt("age", -1)
-        //o değer gelmediğinde -1 olacağı için değer if kontrolü ile kullanıcıya -1 yazmasını engelliyoruz.
-        if (userAgePref == -1) {
-            binding.textViewAge.setText("Yaşınızı Doğru Giriniz!")
-        } else {
-            binding.textViewAge.setText("Your Age: ${userAgePref}")
-        }
+        var newDeger = sharedPref.getString("send","Default deger")
+        binding.textViewGoster.setText("Gelen Deger: ${newDeger.toString()}")
+
     }
-
-    fun buttonSave(view: View) {
-        var age = binding.editTextAge.text.toString().toIntOrNull()
-        if (age != null) {
-           binding.textViewAge.setText("Your Age : ${age}")
-            sharedPref.edit().putInt("age", age).apply()
-        } else {
-            binding.textViewAge.setText("Yanlış bir yerler oldu.")
-        }
+    fun buttonGo(view : View){
+        var intent = Intent(this,MainActivity2::class.java)
+        startActivity(intent)
     }
-
-    fun buttonDelete(view: View) {}
 }
