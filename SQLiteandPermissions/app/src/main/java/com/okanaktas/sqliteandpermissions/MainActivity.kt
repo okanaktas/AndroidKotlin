@@ -21,11 +21,12 @@ class MainActivity : AppCompatActivity() {
 
             //table ismi küçük harf ile yazılır ve genelde veritabanı ismi ile aynı olur.
             //bir tabla oluştur eğer yoksa (create table if not exısts) ve adını da musicians koy.
-            myDatabase.execSQL("CREATE TABLE IF NOT EXISTS musicians (name VARCHAR, age INT)")
+            myDatabase.execSQL("CREATE TABLE IF NOT EXISTS musicians (id INTEGER PRIMARY KEY,name VARCHAR, age INT)")
 
             //insert into -> içine koy
             //musicians tablosunun içerisindeki name ve age sütunlarının içerisine kaydedeceğim ve değerleri values tan sonraki değerler olacak
             myDatabase.execSQL("INSERT INTO musicians (name, age) VALUES ('OKAN',27)")
+            myDatabase.execSQL("INSERT INTO musicians (name, age) VALUES ('BERKAY',9)")
 
             //veritabanın girdiğimiz değerleri çekmek için bir cursor oluşturmamız gerek
             //query yazmak demek veritabınında veri çekmek, sorgu yazmak anlamına geliyor.
@@ -36,11 +37,13 @@ class MainActivity : AppCompatActivity() {
             //kaçıncı indexte kayıtlı olduğu bilgisini alma kısmı
             val nameIndex = cursor.getColumnIndex("name")
             val ageIndex = cursor.getColumnIndex("age")
+            val idIndex = cursor.getColumnIndex("id")
 
             //cursor, mouse imleci gibi tek tek sütunlarda gezinecek
             while (cursor.moveToNext()) {
                 println("Name: ${cursor.getString(nameIndex)}")
                 println("Age: ${cursor.getInt(ageIndex)}")
+                println("Id: ${cursor.getInt(idIndex)}")
             }
             //açtığımız cursor u kapatıyoruz ki daha verimli bir kod olsun
             cursor.close()
