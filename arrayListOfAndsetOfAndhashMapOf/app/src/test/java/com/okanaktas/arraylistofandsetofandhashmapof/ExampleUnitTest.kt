@@ -1,4 +1,4 @@
-package com.okanaktas.arraylistofandsetof
+package com.okanaktas.arraylistofandsetofandhashmapof
 
 import org.junit.Test
 
