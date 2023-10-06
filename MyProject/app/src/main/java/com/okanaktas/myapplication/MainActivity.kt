@@ -1,36 +1,42 @@
 package com.okanaktas.myapplication
 
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import com.okanaktas.myapplication.databinding.ActivityMainBinding
 import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var name: EditText
-    lateinit var age: EditText
-    lateinit var job: EditText
-    lateinit var button: Button
-    lateinit var text: TextView
+    lateinit var binding: ActivityMainBinding
+
+    lateinit var sharedPref: SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        sharedPref = getSharedPreferences("com.okanaktas.myapplication", MODE_PRIVATE)
+
+        binding.button.setOnClickListener {
+            var name = binding.editTextText.text.toString()
+            var age = binding.editTextText2.text.toString().toInt()
+            var job = binding.editTextText3.text.toString()
 
 
-        name = findViewById(R.id.editTextText)
-        age = findViewById(R.id.editTextText2)
-        job = findViewById(R.id.editTextText3)
-        button = findViewById(R.id.button)
 
-        var okan = Aktas("Okan", 27, "Engineer")
+            sharedPref.edit().putString("deger", binding.editTextText.text.toString()).apply()
+            var gelen = sharedPref.getString("deger","Gelmedi")
 
-        button.setOnClickListener {
-            text.setText("İsminiz: ${okan.name}, Yaşınız: ${okan.age}, Mesleğiniz: ${okan.job}")
+            binding.textView.setText(gelen.toString())
+
+
         }
-
-
     }
 }
