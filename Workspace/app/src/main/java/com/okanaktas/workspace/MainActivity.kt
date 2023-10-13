@@ -1,16 +1,17 @@
 package com.okanaktas.workspace
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.okanaktas.workspace.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-
-    lateinit var sharedPref : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,18 +19,29 @@ class MainActivity : AppCompatActivity() {
         var view = binding.root
         setContentView(view)
 
-        sharedPref = this.getSharedPreferences("com.okanaktas.workspace", MODE_PRIVATE)
 
-        binding.textView.setText(sharedPref.getString("deger","Hatta var demektir."))
+    }
+    fun buttonGo(view : View){
+        var alert = AlertDialog.Builder(this@MainActivity)
+        alert.setTitle("Alert Title")
+        alert.setMessage("Uyarı mesajı")
 
+        alert.setPositiveButton("yes", object : DialogInterface.OnClickListener{
+            override fun onClick(dialog: DialogInterface?, which: Int) {
+                Toast.makeText(
+                    this@MainActivity,
+                    "Sen şimdi naneyi yemedin mi ?",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        })
 
-        binding.button.setOnClickListener {
-            binding.textView.setText(binding.editTextText.text.toString())
-            sharedPref.edit().putString("deger",binding.textView.text.toString()).apply()
+        alert.setNegativeButton("No!",object  : DialogInterface.OnClickListener{
+            override fun onClick(dialog: DialogInterface?, which: Int) {
+                Toast.makeText(this@MainActivity,"No dediniz",Toast.LENGTH_LONG).show()
+            }
 
-            var intent = Intent(this,MainActivity2::class.java)
-            startActivity(intent)
-        }
-
+        })
+        alert.show()
     }
 }
