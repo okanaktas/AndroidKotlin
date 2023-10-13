@@ -9,26 +9,16 @@ import com.okanaktas.workspace.databinding.ActivityMain2Binding
 class MainActivity2 : AppCompatActivity() {
     lateinit var binding: ActivityMain2Binding
 
-    lateinit var sharedPref : SharedPreferences
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMain2Binding.inflate(layoutInflater)
         var view = binding.root
         setContentView(view)
 
-        sharedPref = this.getSharedPreferences("com.okanaktas.workspace", MODE_PRIVATE)
+        var intentFromMain = intent //get intent
 
-        var gelmisDeger = sharedPref.getString("deger","Deger Gelmedi")
-
-        binding.textViewGelen.setText(gelmisDeger.toString())
-
-        binding.button2.setOnClickListener {
-            sharedPref.edit().putString("deger",gelmisDeger.toString()).apply()
-
-            var intent = Intent(this,MainActivity::class.java)
-            startActivity(intent)
-        }
+        val gelenDeger = intentFromMain.getStringExtra("gidenDeger")
+        binding.textViewGelen.setText(gelenDeger.toString())
 
     }
 }

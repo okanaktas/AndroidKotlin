@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -12,6 +13,11 @@ import com.okanaktas.workspace.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
+
+    var runnable: Runnable = Runnable {}
+    var handler: Handler = Handler()
+
+    var sayac = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,27 +27,16 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-    fun buttonGo(view : View){
-        var alert = AlertDialog.Builder(this@MainActivity)
-        alert.setTitle("Alert Title")
-        alert.setMessage("Uyarı mesajı")
 
-        alert.setPositiveButton("yes", object : DialogInterface.OnClickListener{
-            override fun onClick(dialog: DialogInterface?, which: Int) {
-                Toast.makeText(
-                    this@MainActivity,
-                    "Sen şimdi naneyi yemedin mi ?",
-                    Toast.LENGTH_LONG
-                ).show()
+    fun buttonStart(view: View) {
+
+        runnable = object : Runnable {
+            override fun run() {
+                binding.textView.setText("Counter: ${sayac}")
+                sayac++
+                handler.postDelayed(runnable, 1000)
             }
-        })
-
-        alert.setNegativeButton("No!",object  : DialogInterface.OnClickListener{
-            override fun onClick(dialog: DialogInterface?, which: Int) {
-                Toast.makeText(this@MainActivity,"No dediniz",Toast.LENGTH_LONG).show()
-            }
-
-        })
-        alert.show()
+        }
+        handler.post(runnable)
     }
 }
