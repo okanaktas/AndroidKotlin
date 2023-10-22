@@ -14,29 +14,18 @@ import com.okanaktas.workspace.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
 
-    var runnable: Runnable = Runnable {}
-    var handler: Handler = Handler()
-
-    var sayac = 0
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         var view = binding.root
         setContentView(view)
 
+        var myUser = User()
+        myUser.name = "Okan"
+        myUser.age = 27
 
-    }
+        println(myUser.name)
+        println(myUser.age.toString())
 
-    fun buttonStart(view: View) {
-
-        runnable = object : Runnable {
-            override fun run() {
-                binding.textView.setText("Counter: ${sayac}")
-                sayac++
-                handler.postDelayed(runnable, 1000)
-            }
-        }
-        handler.post(runnable)
     }
 }
