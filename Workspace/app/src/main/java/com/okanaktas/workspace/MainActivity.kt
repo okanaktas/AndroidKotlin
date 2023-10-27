@@ -1,14 +1,10 @@
 package com.okanaktas.workspace
 
-import android.content.DialogInterface
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import com.okanaktas.workspace.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -20,12 +16,18 @@ class MainActivity : AppCompatActivity() {
         var view = binding.root
         setContentView(view)
 
-        var myUser = User()
-        myUser.name = "Okan"
-        myUser.age = 27
 
-        println(myUser.name)
-        println(myUser.age.toString())
+    }
 
+    fun buttonSend(view: View) {
+        var intent = Intent(this@MainActivity,MainActivity2::class.java)
+        intent.putExtra("name",binding.editTextName.text.toString())
+        if(binding.editTextPassword.text.toString().toInt()<0 || binding.editTextPassword.text.toString().isNotEmpty()){
+            Toast.makeText(this@MainActivity,"Sıfırdan küçük olamaz",Toast.LENGTH_LONG).show()
+        }
+        else{
+            intent.putExtra("password",binding.editTextPassword.text.toString())
+        }
+        startActivity(intent)
     }
 }
