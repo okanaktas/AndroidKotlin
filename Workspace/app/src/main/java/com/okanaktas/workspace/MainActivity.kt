@@ -16,18 +16,28 @@ class MainActivity : AppCompatActivity() {
         var view = binding.root
         setContentView(view)
 
+        try {
 
-    }
+            val myDatabase = this.openOrCreateDatabase("Musicians", MODE_PRIVATE, null)
+            myDatabase.execSQL("CREATE TABLE IF NOT EXISTS musicians (name VARCHAR, age INT)")
 
-    fun buttonSend(view: View) {
-        var intent = Intent(this@MainActivity,MainActivity2::class.java)
-        intent.putExtra("name",binding.editTextName.text.toString())
-        if(binding.editTextPassword.text.toString().toInt()<0 || binding.editTextPassword.text.toString().isNotEmpty()){
-            Toast.makeText(this@MainActivity,"Sıfırdan küçük olamaz",Toast.LENGTH_LONG).show()
+            myDatabase.execSQL("INSERT INTO musicians(name, age) VALUES ('Okan',27) ")
+
+            val cursor = myDatabase.rawQuery("SELECT * FROM musicians", null)
+
+            val nameIx = cursor.getColumnIndex("name")
+            val ageIx = cursor.getColumnIndex("age")
+
+            while (cursor.moveToNext()) {
+                println("Name: " + cursor.getString(nameIx))
+                println("Age: " + cursor.getInt(ageIx))
+            }
+
+            cursor.close()
+
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-        else{
-            intent.putExtra("password",binding.editTextPassword.text.toString())
-        }
-        startActivity(intent)
+
     }
 }
