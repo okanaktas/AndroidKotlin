@@ -39,5 +39,16 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 
+        try {
+
+            val database = this.openOrCreateDatabase("Person", MODE_PRIVATE,null)
+            database.execSQL("CREATE TABLE IF NOT EXISTS person (name VARCHAR,age INT)")
+            database.execSQL("INSERT INTO okan(name,age) VALUES ('okan',27)")
+
+            val cursor = database.rawQuery()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 }
