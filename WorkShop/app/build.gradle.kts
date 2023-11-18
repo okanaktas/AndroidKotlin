@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.okanaktas.workshop"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.okanaktas.workshop"
