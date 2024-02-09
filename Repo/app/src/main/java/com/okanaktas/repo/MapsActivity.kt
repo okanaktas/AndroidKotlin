@@ -52,7 +52,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         locationListener = object : LocationListener {
             override fun onLocationChanged(location: Location) {
-
+                val userLocation = LatLng(location.latitude, location.longitude)
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15f))
             }
         }
 
@@ -69,7 +70,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         } else {
             //permissions granted
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
-
+            val lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            if (lastLocation != null) {
+                val lastUserLocation = LatLng(lastLocation.latitude, lastLocation.longitude)
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 15f))
+            }
         }
 
 
@@ -81,13 +86,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             if (result) {
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
+                    val lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+                    if (lastLocation != null) {
+                        val lastUserLocation = LatLng(lastLocation.latitude, lastLocation.longitude)
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 15f))
+                    }
+                } else {
+                    Toast.makeText(this@MapsActivity, "Permissions needed!", Toast.LENGTH_LONG).show()
                 }
-            } else {
-                Toast.makeText(this@MapsActivity, "Permissions needed!", Toast.LENGTH_LONG).show()
-            }
 
+            }
         }
     }
 
-
+    
 }
