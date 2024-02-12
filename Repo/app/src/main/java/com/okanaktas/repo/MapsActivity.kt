@@ -57,29 +57,34 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, "permission needed!") != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                Snackbar.make(binding.root, "Permissions needed!", Snackbar.LENGTH_INDEFINITE).setAction("Give Permissions!") {
-
+                Snackbar.make(binding.root, "Permission Needed!", Snackbar.LENGTH_INDEFINITE).setAction("Give Permission") {
+                    permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
                 }.show()
             } else {
-
+                //Permission Granted
+                permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
             }
         } else {
+            //permission granted
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
-        }
 
+        }
 
     }
 
     private fun registerLauncher() {
         permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { result ->
             if (result) {
-                Toast.makeText(this@MapsActivity, "Permission needed!", Toast.LENGTH_SHORT).show()
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
+                }
             } else {
-
+                Toast.makeText(this@MapsActivity, "permissions needed!", Toast.LENGTH_SHORT).show()
             }
 
         }
     }
+
 }
