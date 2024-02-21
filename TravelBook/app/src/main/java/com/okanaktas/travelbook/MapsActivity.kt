@@ -107,6 +107,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 val lastUserLocation = LatLng(lastLocation.latitude,lastLocation.longitude)
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation,15f))
             }
+            //izin verildiyse konumumu goster
+            mMap.isMyLocationEnabled = true
         }
 
 
@@ -132,6 +134,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation,15f))
                     }
 
+                    //izni ilk defa aldıgımızda konumumu goster
+                    mMap.isMyLocationEnabled = true
                 }
             } else {
                 //permission denied
