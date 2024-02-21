@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
     fun buttonGo(view : View){
-        var intent = Intent(this@MainActivity,MapsActivity::class.java)
+        val intent = Intent(this@MainActivity,MapsActivity::class.java)
         startActivity(intent)
     }
 }
