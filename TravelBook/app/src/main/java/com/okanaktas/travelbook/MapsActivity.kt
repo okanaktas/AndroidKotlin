@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
 import com.okanaktas.travelbook.databinding.ActivityMapsBinding
+import com.okanaktas.travelbook.model.Place
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,GoogleMap.OnMapLongClickListener {
 
@@ -167,7 +168,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,GoogleMap.OnMapLon
     }
 
     fun buttonSave(view : View){
-
+        val place = Place()
     }
     fun buttonDelete(view : View){
 
