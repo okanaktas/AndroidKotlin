@@ -58,7 +58,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         locationListener = object : LocationListener {
             override fun onLocationChanged(location: Location) {
-
+                println("location: " + location.toString())
             }
         }
 
@@ -69,11 +69,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this@MapsActivity, Manifest.permission.ACCESS_FINE_LOCATION)) {
                 Snackbar.make(binding.root, "Permission needed!", Snackbar.LENGTH_INDEFINITE).setAction("Give permission") {
                     //request permission
-
+                    permissinLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
                 }.show()
             } else {
                 //request permission
-
+                permissinLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
             }
         } else {
             //permissions granted
@@ -92,12 +92,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             if (result) {
                 //Android izin verildigine emin olunmasını istedigi icin bir kez daha kontrol ediyoruz
                 //permission granted
-                if(ContextCompat.checkSelfPermission(this@MapsActivity,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                if (ContextCompat.checkSelfPermission(
+                        this@MapsActivity,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
                 }
             } else {
                 //permission denied
-                Toast.makeText(this@MapsActivity,"Permission Needed!",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MapsActivity, "Permission Needed!", Toast.LENGTH_SHORT).show()
             }
         }
     }
