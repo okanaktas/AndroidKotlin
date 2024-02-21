@@ -1,6 +1,7 @@
 package com.okanaktas.travelbook
 
 import android.Manifest
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -28,6 +29,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityMapsBinding
     private lateinit var locationManager: LocationManager
     private lateinit var locationListener: LocationListener
+    private lateinit var sharedPreferences : SharedPreferences
+    private var trackBoolen : Boolean? = null
 
     //izin istemek icin tanımlıyorum
     private lateinit var permissinLauncher: ActivityResultLauncher<String>
@@ -43,6 +46,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         registerLauncher()
+
+        sharedPreferences = this.getSharedPreferences("com.okanaktas.travelbook", MODE_PRIVATE)
+        trackBoolen = false
     }
 
 
@@ -57,8 +63,23 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         locationListener = object : LocationListener {
             override fun onLocationChanged(location: Location) {
-                val userLocation = LatLng(location.latitude,location.longitude)
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation,15f))
+
+                //eger trackBoolean false ise bir defaya mahsus onLocationChanged'i calistir. eger degilse calsitirma
+
+                //bu deger sharedPreferences de kayıtlı mı ona bakıcam. Kayıtlı degilse ilk deger false olarak kalsin
+                trackBoolen = sharedPreferences.getBoolean("trackBoolean",false)
+
+                //ilk kez calismis ise bu calissin
+                if(trackBoolen == false){
+                    val userLocation = LatLng(location.latitude,location.longitude)
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation,15f))
+
+                //Daha sonrasında trackBoolean'ı true yapıyorum ki her defasında cagrılmasın.
+                    sharedPreferences.edit().putBoolean("trackBoolean",true).apply()
+                }else{
+
+                }
+
             }
         }
 
@@ -79,6 +100,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             //permissions granted
             //kullanıcının konumunu aldıgımız yer
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
+
+            //Kullanıcının son konumunu alıyoruz
+            val lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+
+            //lastLocation null dondugu icin(boyle bir konum olmayabilir cunku) if dongusune sokuyoruz
+            if(lastLocation != null){
+                val lastUserLocation = LatLng(lastLocation.latitude,lastLocation.longitude)
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation,15f))
+            }
         }
 
 
@@ -94,6 +124,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 //permission granted
                 if (ContextCompat.checkSelfPermission(this@MapsActivity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
+
+                    //Kullanıcının son konumunu alıyoruz
+                    val lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+
+                    //lastLocation null dondugu icin(boyle bir konum olmayabilir cunku) if dongusune sokuyoruz
+                    if(lastLocation != null){
+                        val lastUserLocation = LatLng(lastLocation.latitude,lastLocation.longitude)
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation,15f))
+                    }
+
                 }
             } else {
                 //permission denied

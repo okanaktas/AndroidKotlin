@@ -53,7 +53,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         locationListener = object : LocationListener {
             override fun onLocationChanged(location: Location) {
                 val userLocation = LatLng(location.latitude, location.longitude)
-                
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation,15f))
+
             }
         }
 
