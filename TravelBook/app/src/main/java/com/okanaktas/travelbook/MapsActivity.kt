@@ -76,8 +76,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 //Daha sonrasında trackBoolean'ı true yapıyorum ki her defasında cagrılmasın.
                     sharedPreferences.edit().putBoolean("trackBoolean",true).apply()
-                }else{
-
                 }
 
             }
