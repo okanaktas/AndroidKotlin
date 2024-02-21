@@ -38,11 +38,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(binding.root)
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        registerLauncher()
+        registerlauncher()
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -52,39 +52,42 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         locationListener = object : LocationListener {
             override fun onLocationChanged(location: Location) {
-
-
+                val userLocation = LatLng(location.latitude, location.longitude)
+                
             }
         }
 
-        if (ContextCompat.checkSelfPermission(this, "permission needed!") != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                Snackbar.make(binding.root, "Permission Needed!", Snackbar.LENGTH_INDEFINITE).setAction("Give Permission") {
+                Snackbar.make(binding.root, "permission needed", Snackbar.LENGTH_INDEFINITE).setAction("Give Permission") {
+                    //reguest permisson
                     permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
                 }.show()
             } else {
-                //Permission Granted
+                //reguest permission
                 permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
             }
         } else {
             //permission granted
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
-
         }
+
 
     }
 
-    private fun registerLauncher() {
+    private fun registerlauncher() {
         permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { result ->
             if (result) {
+                //permission granted
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
                 }
             } else {
-                Toast.makeText(this@MapsActivity, "permissions needed!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Permission Needed", Toast.LENGTH_SHORT).show()
             }
 
         }
     }
+
 
 }

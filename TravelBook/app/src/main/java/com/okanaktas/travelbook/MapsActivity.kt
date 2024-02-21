@@ -39,8 +39,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(binding.root)
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
         registerLauncher()
@@ -58,7 +57,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         locationListener = object : LocationListener {
             override fun onLocationChanged(location: Location) {
-                println("location: " + location.toString())
+                val userLocation = LatLng(location.latitude,location.longitude)
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation,15f))
             }
         }
 
@@ -92,11 +92,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             if (result) {
                 //Android izin verildigine emin olunmasını istedigi icin bir kez daha kontrol ediyoruz
                 //permission granted
-                if (ContextCompat.checkSelfPermission(
-                        this@MapsActivity,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    ) == PackageManager.PERMISSION_GRANTED
-                ) {
+                if (ContextCompat.checkSelfPermission(this@MapsActivity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
                 }
             } else {
