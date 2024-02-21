@@ -23,7 +23,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
 import com.okanaktas.travelbook.databinding.ActivityMapsBinding
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,GoogleMap.OnMapLongClickListener {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
@@ -31,6 +31,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var locationListener: LocationListener
     private lateinit var sharedPreferences : SharedPreferences
     private var trackBoolen : Boolean? = null
+
+    //Uzun basımlarda konumu almak icin degiskenler
+    private var selectedLatitude : Double? = null
+    private var selectedLongitude : Double? = null
 
     //izin istemek icin tanımlıyorum
     private lateinit var permissinLauncher: ActivityResultLauncher<String>
@@ -49,11 +53,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         sharedPreferences = this.getSharedPreferences("com.okanaktas.travelbook", MODE_PRIVATE)
         trackBoolen = false
+
+        selectedLatitude = 0.0
+        selectedLongitude = 0.0
     }
 
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        mMap.setOnMapLongClickListener(this)
 
         //locationManager -> konum yoneticimiz, konumla ilgili tum islemleri ele alıyor.
         //locationLisetener -> Konum degisikliklerini dinleyen ve bize haber veren öge, arayuz.
@@ -142,5 +150,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 Toast.makeText(this@MapsActivity, "Permission Needed!", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    override fun onMapLongClick(p0: LatLng) {
+
+        //daha once eklenmis bir marker varsa onu siler
+        mMap.clear()
+
+        //Uzun Tıklandıgı zaman marker ekleme
+        mMap.addMarker(MarkerOptions().position(p0))
+
+        //secilen yerleri selected olan degiskenlere atadık
+        selectedLatitude = p0.latitude
+        selectedLongitude = p0.longitude
     }
 }
