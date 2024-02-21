@@ -1,6 +1,7 @@
 package com.okanaktas.repo
 
 import android.Manifest
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -30,6 +31,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var locationManager: LocationManager
     private lateinit var locationListener: LocationListener
     private lateinit var permissionLauncher: ActivityResultLauncher<String>
+    private lateinit var sharedPreferences: SharedPreferences
+    private var trackBoolean = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +47,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         registerlauncher()
 
+        sharedPreferences = this.getSharedPreferences("com.okanaktas.repo", MODE_PRIVATE)
+
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -52,8 +59,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         locationListener = object : LocationListener {
             override fun onLocationChanged(location: Location) {
-                val userLocation = LatLng(location.latitude, location.longitude)
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation,15f))
+
+                trackBoolean = sharedPreferences.getBoolean("trackBoolean", false)
+
+                if (trackBoolean == false) {
+
+                    val userLocation = LatLng(location.latitude, location.longitude)
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15f))
+
+                    sharedPreferences.edit().putBoolean("trackBoolean", true).apply()
+                }
 
             }
         }
@@ -71,6 +86,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         } else {
             //permission granted
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
+
+            val lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            if (lastLocation != null) {
+                val lastUserLocation = LatLng(lastLocation.latitude, lastLocation.longitude)
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 15f))
+            }
         }
 
 
@@ -82,6 +103,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 //permission granted
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
+
+                    val lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+                    if (lastLocation != null) {
+                        val lastUserLocation = LatLng(lastLocation.latitude, lastLocation.longitude)
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 15f))
+                    }
                 }
             } else {
                 Toast.makeText(this, "Permission Needed", Toast.LENGTH_SHORT).show()
