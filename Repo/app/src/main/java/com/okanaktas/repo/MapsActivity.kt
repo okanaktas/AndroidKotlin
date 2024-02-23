@@ -32,7 +32,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var locationListener: LocationListener
     private lateinit var permissionLauncher: ActivityResultLauncher<String>
     private lateinit var sharedPreferences: SharedPreferences
-    private var trackBoolean : Boolean? = null
+    private var trackBoolean: Boolean? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,8 +58,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         locationListener = object : LocationListener {
             override fun onLocationChanged(location: Location) {
 
-                val userLocation = LatLng(location.latitude,location.longitude)
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation,16f))
+                trackBoolean = sharedPreferences.getBoolean("trackBoolean", false)
+                if (trackBoolean == false) {
+                    val userLocation = LatLng(location.latitude, location.longitude)
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 16f))
+                }
+                sharedPreferences.edit().putBoolean("trackBoolean", true).apply()
 
             }
         }
@@ -76,6 +80,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             //permission granted
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
 
+            val lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            if (lastLocation != null) {
+                val lastUserLocation = LatLng(lastLocation.latitude, lastLocation.longitude)
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 16f))
+            }
+
             mMap.isMyLocationEnabled = true
         }
 
@@ -85,6 +95,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { result ->
             if (ContextCompat.checkSelfPermission(this@MapsActivity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
+
+                val lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+                if (lastLocation != null) {
+                    val lastUserLocation = LatLng(lastLocation.latitude, lastLocation.longitude)
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 16f))
+                }
 
                 mMap.isMyLocationEnabled = true
             } else {
