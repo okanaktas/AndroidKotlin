@@ -1,11 +1,11 @@
-package com.okanaktas.travelbook
+package com.okanaktas.travelbook.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
+import com.okanaktas.travelbook.R
 import com.okanaktas.travelbook.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         //su an menu icerisinde bir tane item var yine de kontrol ediyoruz hangi item seciliyor diye
         if(item.itemId == R.id.add_place){
-            val intent = Intent(this@MainActivity,MapsActivity::class.java)
+            val intent = Intent(this@MainActivity, MapsActivity::class.java)
             startActivity(intent)
         }
         return super.onOptionsItemSelected(item)

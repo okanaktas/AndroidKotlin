@@ -1,4 +1,4 @@
-package com.okanaktas.travelbook
+package com.okanaktas.travelbook.view
 
 import android.Manifest
 import android.content.SharedPreferences
@@ -22,6 +22,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
+import com.okanaktas.travelbook.R
 import com.okanaktas.travelbook.databinding.ActivityMapsBinding
 import com.okanaktas.travelbook.model.Place
 
