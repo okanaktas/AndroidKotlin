@@ -1,6 +1,7 @@
 package com.okanaktas.travelbook.view
 
 import android.Manifest
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
@@ -14,6 +15,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.room.Dao
+import androidx.room.Room
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -25,6 +28,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.okanaktas.travelbook.R
 import com.okanaktas.travelbook.databinding.ActivityMapsBinding
 import com.okanaktas.travelbook.model.Place
+import com.okanaktas.travelbook.roomdb.PlaceDao
+import com.okanaktas.travelbook.roomdb.PlaceDatabase
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,GoogleMap.OnMapLongClickListener {
 
@@ -34,6 +42,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,GoogleMap.OnMapLon
     private lateinit var locationListener: LocationListener
     private lateinit var sharedPreferences : SharedPreferences
     private var trackBoolen : Boolean? = null
+    private lateinit var db : PlaceDatabase
+    private lateinit var placeDao : PlaceDao
+    val compositeDisposable = CompositeDisposable()
 
     //Uzun basımlarda konumu almak icin degiskenler
     private var selectedLatitude : Double? = null
@@ -59,6 +70,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,GoogleMap.OnMapLon
 
         selectedLatitude = 0.0
         selectedLongitude = 0.0
+
+        db = Room.databaseBuilder(applicationContext,PlaceDatabase::class.java,"Places")
+            //allowMainThreadQueries ana thread de calismasina izin ver
+            //.allowMainThreadQueries()
+            .build()
+
+        placeDao = db.placeDao()
     }
 
 
@@ -169,9 +187,33 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,GoogleMap.OnMapLon
     }
 
     fun buttonSave(view : View){
-        val place = Place()
+
+        if(selectedLatitude != null && selectedLongitude !=null){
+            val place = Place(binding.placeText.text.toString(), selectedLatitude!!,selectedLongitude!!)
+            compositeDisposable.add(
+                placeDao.insert(place)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::handleResponse)
+            )
+        }
+
     }
+
+    private fun handleResponse(){
+        val intent = Intent(this@MapsActivity,MainActivity::class.java)
+        //Acik olan butun activiteleri kapat
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
+    }
+
     fun buttonDelete(view : View){
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        compositeDisposable.clear()
     }
 }
