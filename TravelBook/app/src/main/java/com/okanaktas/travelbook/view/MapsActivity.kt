@@ -45,6 +45,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLon
     private lateinit var db: PlaceDatabase
     private lateinit var placeDao: PlaceDao
     val compositeDisposable = CompositeDisposable()
+    var placeFromMain: Place? = null
 
     //Uzun basımlarda konumu almak icin degiskenler
     private var selectedLatitude: Double? = null
@@ -153,6 +154,23 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLon
 
         } else {
             //eklenmis var olan yer
+
+            mMap.clear()
+
+            placeFromMain = intent.getSerializableExtra("selectedPlace") as? Place
+
+            //null degil ise anlamına geliyor ?.let
+            placeFromMain?.let {
+                val latlng = LatLng(it.latitude, it.longitude)
+                mMap.addMarker(MarkerOptions().position(latlng).title(it.name))
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 16f))
+
+                binding.placeText.setText(it.name)
+                binding.saveButton.visibility = View.GONE
+                binding.deleteButton.visibility = View.VISIBLE
+            }
+
+
         }
 
 
