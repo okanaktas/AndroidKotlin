@@ -34,21 +34,21 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,GoogleMap.OnMapLongClickListener {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLongClickListener {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
     private lateinit var locationManager: LocationManager
     private lateinit var locationListener: LocationListener
-    private lateinit var sharedPreferences : SharedPreferences
-    private var trackBoolen : Boolean? = null
-    private lateinit var db : PlaceDatabase
-    private lateinit var placeDao : PlaceDao
+    private lateinit var sharedPreferences: SharedPreferences
+    private var trackBoolen: Boolean? = null
+    private lateinit var db: PlaceDatabase
+    private lateinit var placeDao: PlaceDao
     val compositeDisposable = CompositeDisposable()
 
     //Uzun basımlarda konumu almak icin degiskenler
-    private var selectedLatitude : Double? = null
-    private var selectedLongitude : Double? = null
+    private var selectedLatitude: Double? = null
+    private var selectedLongitude: Double? = null
 
     //izin istemek icin tanımlıyorum
     private lateinit var permissinLauncher: ActivityResultLauncher<String>
@@ -71,7 +71,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,GoogleMap.OnMapLon
         selectedLatitude = 0.0
         selectedLongitude = 0.0
 
-        db = Room.databaseBuilder(applicationContext,PlaceDatabase::class.java,"Places")
+        db = Room.databaseBuilder(applicationContext, PlaceDatabase::class.java, "Places")
             //allowMainThreadQueries ana thread de calismasina izin ver
             //.allowMainThreadQueries()
             .build()
@@ -84,60 +84,75 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,GoogleMap.OnMapLon
         mMap = googleMap
         mMap.setOnMapLongClickListener(this)
 
-        //locationManager -> konum yoneticimiz, konumla ilgili tum islemleri ele alıyor.
-        //locationLisetener -> Konum degisikliklerini dinleyen ve bize haber veren öge, arayuz.
+        val intent = intent
+        val info = intent.getStringExtra("info")
 
-        //casting -> kullanılan servis(LOCATIN_SERVISE) bir LocationManager olduguna eminim.
-        locationManager = this.getSystemService(LOCATION_SERVICE) as LocationManager
+        if (info == "new") {
+            //Butonlarda degisiklik
+            binding.saveButton.visibility = View.VISIBLE
+            //GONE -> Hem gorunmez yapar hemde yer tutmaz, INVISIBLE -> Gorunmez yapar ama yerini tutar
+            binding.deleteButton.visibility = View.GONE
+            //kullanıcı yeni yer ekliyor
 
-        locationListener = object : LocationListener {
-            override fun onLocationChanged(location: Location) {
+            //locationManager -> konum yoneticimiz, konumla ilgili tum islemleri ele alıyor.
+            //locationLisetener -> Konum degisikliklerini dinleyen ve bize haber veren öge, arayuz.
 
-                //eger trackBoolean false ise bir defaya mahsus onLocationChanged'i calistir. eger degilse calsitirma
+            //casting -> kullanılan servis(LOCATIN_SERVISE) bir LocationManager olduguna eminim.
+            locationManager = this.getSystemService(LOCATION_SERVICE) as LocationManager
 
-                //bu deger sharedPreferences de kayıtlı mı ona bakıcam. Kayıtlı degilse ilk deger false olarak kalsin
-                trackBoolen = sharedPreferences.getBoolean("trackBoolean",false)
+            locationListener = object : LocationListener {
+                override fun onLocationChanged(location: Location) {
 
-                //ilk kez calismis ise bu calissin
-                if(trackBoolen == false){
-                    val userLocation = LatLng(location.latitude,location.longitude)
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation,15f))
+                    //eger trackBoolean false ise bir defaya mahsus onLocationChanged'i calistir. eger degilse calsitirma
 
-                //Daha sonrasında trackBoolean'ı true yapıyorum ki her defasında cagrılmasın.
-                    sharedPreferences.edit().putBoolean("trackBoolean",true).apply()
+                    //bu deger sharedPreferences de kayıtlı mı ona bakıcam. Kayıtlı degilse ilk deger false olarak kalsin
+                    trackBoolen = sharedPreferences.getBoolean("trackBoolean", false)
+
+                    //ilk kez calismis ise bu calissin
+                    if (trackBoolen == false) {
+                        val userLocation = LatLng(location.latitude, location.longitude)
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15f))
+
+                        //Daha sonrasında trackBoolean'ı true yapıyorum ki her defasında cagrılmasın.
+                        sharedPreferences.edit().putBoolean("trackBoolean", true).apply()
+                    }
+
                 }
-
             }
-        }
 
-        //İznin verilip verilmedigini kontrol ettimiz yer
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            //İzin isteme kısmı
-            //Kullanıcyı bununla ilgili bir mesaj göstermeli miyiz bunu kontrol ediyoruz. Eger bu true donerse kullanıcıya bir mesah gostermemiz gerekiyor ve bununla birlikte izni istememiz gerekiyor. False donerse de izin isteyecegiz ama bunu android kendi belirliyor.
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this@MapsActivity, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                Snackbar.make(binding.root, "Permission needed!", Snackbar.LENGTH_INDEFINITE).setAction("Give permission") {
+            //İznin verilip verilmedigini kontrol ettimiz yer
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                //İzin isteme kısmı
+                //Kullanıcyı bununla ilgili bir mesaj göstermeli miyiz bunu kontrol ediyoruz. Eger bu true donerse kullanıcıya bir mesah gostermemiz gerekiyor ve bununla birlikte izni istememiz gerekiyor. False donerse de izin isteyecegiz ama bunu android kendi belirliyor.
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this@MapsActivity, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    Snackbar.make(binding.root, "Permission needed!", Snackbar.LENGTH_INDEFINITE).setAction("Give permission") {
+                        //request permission
+                        permissinLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+                    }.show()
+                } else {
                     //request permission
                     permissinLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-                }.show()
+                }
             } else {
-                //request permission
-                permissinLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+                //permissions granted
+                //kullanıcının konumunu aldıgımız yer
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
+
+                //Kullanıcının son konumunu alıyoruz
+                val lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+
+                //lastLocation null dondugu icin(boyle bir konum olmayabilir cunku) if dongusune sokuyoruz
+                if (lastLocation != null) {
+                    val lastUserLocation = LatLng(lastLocation.latitude, lastLocation.longitude)
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 15f))
+                }
+                //izin verildiyse konumumu goster
+                mMap.isMyLocationEnabled = true
             }
+
+
         } else {
-            //permissions granted
-            //kullanıcının konumunu aldıgımız yer
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
-
-            //Kullanıcının son konumunu alıyoruz
-            val lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-
-            //lastLocation null dondugu icin(boyle bir konum olmayabilir cunku) if dongusune sokuyoruz
-            if(lastLocation != null){
-                val lastUserLocation = LatLng(lastLocation.latitude,lastLocation.longitude)
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation,15f))
-            }
-            //izin verildiyse konumumu goster
-            mMap.isMyLocationEnabled = true
+            //eklenmis var olan yer
         }
 
 
@@ -158,9 +173,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,GoogleMap.OnMapLon
                     val lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
 
                     //lastLocation null dondugu icin(boyle bir konum olmayabilir cunku) if dongusune sokuyoruz
-                    if(lastLocation != null){
-                        val lastUserLocation = LatLng(lastLocation.latitude,lastLocation.longitude)
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation,15f))
+                    if (lastLocation != null) {
+                        val lastUserLocation = LatLng(lastLocation.latitude, lastLocation.longitude)
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 15f))
                     }
 
                     //izni ilk defa aldıgımızda konumumu goster
@@ -186,28 +201,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,GoogleMap.OnMapLon
         selectedLongitude = p0.longitude
     }
 
-    fun buttonSave(view : View){
+    fun buttonSave(view: View) {
 
-        if(selectedLatitude != null && selectedLongitude !=null){
-            val place = Place(binding.placeText.text.toString(), selectedLatitude!!,selectedLongitude!!)
+        if (selectedLatitude != null && selectedLongitude != null) {
+            val place = Place(binding.placeText.text.toString(), selectedLatitude!!, selectedLongitude!!)
             compositeDisposable.add(
-                placeDao.insert(place)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(this::handleResponse)
+                placeDao.insert(place).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this::handleResponse)
             )
         }
 
     }
 
-    private fun handleResponse(){
-        val intent = Intent(this@MapsActivity,MainActivity::class.java)
+    private fun handleResponse() {
+        val intent = Intent(this@MapsActivity, MainActivity::class.java)
         //Acik olan butun activiteleri kapat
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
 
-    fun buttonDelete(view : View){
+    fun buttonDelete(view: View) {
 
     }
 

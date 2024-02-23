@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity() {
         //su an menu icerisinde bir tane item var yine de kontrol ediyoruz hangi item seciliyor diye
         if (item.itemId == R.id.add_place) {
             val intent = Intent(this@MainActivity, MapsActivity::class.java)
+            intent.putExtra("info","new")
             startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
