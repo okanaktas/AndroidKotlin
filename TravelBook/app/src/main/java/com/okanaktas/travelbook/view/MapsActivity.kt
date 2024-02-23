@@ -78,6 +78,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLon
             .build()
 
         placeDao = db.placeDao()
+
+        binding.saveButton.isEnabled = false
     }
 
 
@@ -217,6 +219,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLon
         //secilen yerleri selected olan degiskenlere atadık
         selectedLatitude = p0.latitude
         selectedLongitude = p0.longitude
+
+        binding.saveButton.isEnabled = true
     }
 
     fun buttonSave(view: View) {
