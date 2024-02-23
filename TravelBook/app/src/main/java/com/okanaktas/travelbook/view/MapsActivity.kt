@@ -243,6 +243,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLon
 
     fun buttonDelete(view: View) {
 
+        //placeFromMain null degilse anlamında ?.let
+        placeFromMain?.let {
+
+            compositeDisposable.add(
+                placeDao.delete(it)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::handleResponse)
+            )
+        }
+
     }
 
     override fun onDestroy() {
