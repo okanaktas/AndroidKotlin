@@ -12,6 +12,10 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        val pisa = Landmark("Pisa", "Italy", R.drawable.pisa)
+        val colosseum = Landmark("Colosseum", "Italy", R.drawable.colosseum)
+        val eiffel = Landmark("Eiffel", "France", R.drawable.eiffel)
+        val londonBridge = Landmark("London Bridge", "UK", R.drawable.london_bridge)
 
     }
 }
