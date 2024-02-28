@@ -1,5 +1,6 @@
 package com.okanaktas.landmarkbook
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,5 +27,11 @@ class LandmarkAdapter(val landmarklist: ArrayList<Landmark>) : RecyclerView.Adap
     //bağlandıktan sonra ne olacak. hangi texte hangi veri kullanılacak
     override fun onBindViewHolder(holder: LandmarkHolder, position: Int) {
         holder.binding.recyclerViewTextView.text = landmarklist.get(position).name
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, DetailsActivity::class.java)
+            intent.putExtra("landmark", landmarklist.get(position))
+            holder.itemView.context.startActivity(intent)
+        }
     }
 }

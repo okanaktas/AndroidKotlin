@@ -2,6 +2,7 @@ package com.okanaktas.landmarkbook
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.okanaktas.landmarkbook.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -28,7 +29,8 @@ class MainActivity : AppCompatActivity() {
         landmarkList.add(eiffel)
         landmarkList.add(londonBridge)
 
-
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
         val landmarkAdapter = LandmarkAdapter(landmarkList)
+        binding.recyclerView.adapter = landmarkAdapter
     }
 }
