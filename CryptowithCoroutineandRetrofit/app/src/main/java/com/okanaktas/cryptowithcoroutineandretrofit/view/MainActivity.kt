@@ -9,6 +9,7 @@ import com.okanaktas.cryptowithcoroutineandretrofit.adapter.RecyclerViewAdapter
 import com.okanaktas.cryptowithcoroutineandretrofit.databinding.ActivityMainBinding
 import com.okanaktas.cryptowithcoroutineandretrofit.model.CryptoModel
 import com.okanaktas.cryptowithcoroutineandretrofit.service.CryptoAPI
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -28,6 +29,10 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.Listener {
     private var cryptoModels: ArrayList<CryptoModel>? = null
     private var recyclerViewAdapter: RecyclerViewAdapter? = null
     private var job: Job? = null
+
+    val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+        println("Error: ${throwable.localizedMessage}")
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +58,7 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.Listener {
         job = CoroutineScope(Dispatchers.IO).launch {
             val response = retrofit.getData()
 
-            withContext(Dispatchers.Main) {
+            withContext(Dispatchers.Main + exceptionHandler) {
                 if (response.isSuccessful) {
                     response.body()?.let {
                         cryptoModels = ArrayList(it)
