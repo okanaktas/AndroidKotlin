@@ -9,6 +9,11 @@ import com.okanaktas.cryptowithcoroutineandretrofit.adapter.RecyclerViewAdapter
 import com.okanaktas.cryptowithcoroutineandretrofit.databinding.ActivityMainBinding
 import com.okanaktas.cryptowithcoroutineandretrofit.model.CryptoModel
 import com.okanaktas.cryptowithcoroutineandretrofit.service.CryptoAPI
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,6 +27,7 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.Listener {
     private val BASE_URL = "https://raw.githubusercontent.com/"
     private var cryptoModels: ArrayList<CryptoModel>? = null
     private var recyclerViewAdapter: RecyclerViewAdapter? = null
+    private var job: Job? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +49,22 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.Listener {
     private fun loadData() {
 
         val retrofit = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build().create(CryptoAPI::class.java)
+
+        job = CoroutineScope(Dispatchers.IO).launch {
+            val response = retrofit.getData()
+
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        cryptoModels = ArrayList(it)
+                        cryptoModels?.let {
+                            recyclerViewAdapter = RecyclerViewAdapter(it, this@MainActivity)
+                            binding.recyclerView.adapter = recyclerViewAdapter
+                        }
+                    }
+                }
+            }
+        }
 
         /*Call yöntemi ile veri çektim. Diğer bir yöntem Rxjava. Ama yukarıda Coroutine ile veri çekeceğim
         val call = retrofit.getData()
@@ -76,6 +98,7 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.Listener {
 
     override fun onDestroy() {
         super.onDestroy()
+        job?.cancel()
     }
 
 }
