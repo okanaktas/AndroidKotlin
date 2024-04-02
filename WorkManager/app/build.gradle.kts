@@ -31,9 +31,9 @@ android {
         jvmTarget = "1.8"
     }
 }
+val work_version = "2.9.0"
 
 dependencies {
-    val work_version = "2.9.0"
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -44,5 +44,6 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation(libs.androidx.work.runtime.ktx)
+
+    implementation("androidx.work:work-runtime-ktx:$work_version")
 }
