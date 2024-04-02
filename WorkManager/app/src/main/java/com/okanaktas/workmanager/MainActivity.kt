@@ -5,6 +5,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.work.Constraints
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.WorkRequest
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,5 +22,19 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val data = Data.Builder().putInt("intKey", 1).build()
+
+        val constraints = Constraints.Builder().setRequiresCharging(false).build()
+
+        val myWorkRequest : WorkRequest = OneTimeWorkRequestBuilder<RefreshDatabase>()
+            .setConstraints(constraints)//build yapmadana önce istediğim constrainskeri ekledim
+            .setInputData(data)//benim verim var mı ? var. Bunları gönder birlikte
+            //.setInitialDelay(5,TimeUnit.HOURS)//bunu gecikmeli başlat.
+            //.addTag("myTag")//etiket eklemek istersek
+            .build()
+
+        //calıştırmak için workmanagerın kendisini çağırıyorum
+        WorkManager.getInstance(this).enqueue(myWorkRequest)
     }
 }
