@@ -5,11 +5,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Observer
 import androidx.work.Constraints
 import androidx.work.Data
+import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import java.util.concurrent.TimeUnit
@@ -44,11 +47,38 @@ class MainActivity : AppCompatActivity() {
 
         //periodic oldugu zaman constructer vermemiz gerek
         //Android en az 15 dakika ara ile bunu yapılabilmesine izin veriyor daha az olmuyor
-        val myWorkRequest : PeriodicWorkRequest = PeriodicWorkRequestBuilder<RefreshDatabase>(15,TimeUnit.MINUTES)
+        val myWorkRequest: PeriodicWorkRequest = PeriodicWorkRequestBuilder<RefreshDatabase>(15, TimeUnit.MINUTES).setConstraints(constraints).setInputData(data).build()
+
+        WorkManager.getInstance(this).enqueue(myWorkRequest)
+
+        //Durumunu sorgulamak için
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(myWorkRequest.id).observe(this, Observer {
+            if (it.state == WorkInfo.State.RUNNING) {
+                println("running")
+            } else if (it.state == WorkInfo.State.FAILED) {
+                println("failed")
+            } else if (it.state == WorkInfo.State.SUCCEEDED) {
+                println("succeeded")
+            }
+        })
+
+        /*
+        //iptal etmek istiyoruz diyelim.
+        WorkManager.getInstance(this).cancelAllWork()
+
+        //Chaining
+
+        //arka arkaya zincirleme ve bunları bağlama, sen şu işlemle başla o bitsin bunu yap falan fakat bu sadece OneTimeRequest ile çalışıyor.
+        val oneTimeRequest : OneTimeWorkRequest = OneTimeWorkRequestBuilder<RefreshDatabase>()
             .setConstraints(constraints)
             .setInputData(data)
             .build()
 
-        WorkManager.getInstance(this).enqueue(myWorkRequest)
+        WorkManager.getInstance(this).beginWith(oneTimeRequest)
+            .then(oneTimeRequest)
+            .then(oneTimeRequest)
+            .enqueue()
+
+         */
     }
 }
